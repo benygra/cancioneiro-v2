@@ -7,6 +7,8 @@
   --btn-bg-color: rgba(206, 154, 8, 255);
   --nav-line-color: rgba(255, 255, 255, .3);
   --nav-text-color: white;
+  --nav-top-color: #cb9808;
+  --nav-bottom-color: #826105;
   --added-bg-color: greenyellow;
   --cart-bg-color: rgba(206, 154, 8, 255);
   --menino-color: #6BB7FF;
@@ -47,12 +49,13 @@
 
 .nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: top;
   text-align: center;
   font-size: 1.1em;
   font-weight: lighter;
   border-bottom: 1px solid var(--nav-line-color);
+  background-image: linear-gradient(to top, var(--nav-bottom-color) 10%, var(--nav-top-color) 100%);
 }
 
 .nav ul {
@@ -134,11 +137,6 @@
 
 .cart ul li img:hover {
   transform: scale(1.1);
-}
-
-.main-header {
-  background-image: linear-gradient(to top, black 10%, rgba(206, 154, 8, 255) 100%);
-  padding-bottom: 30px;
 }
 
 .songbook-name {
@@ -337,9 +335,11 @@ pre {
   }
 
   .beny-guitar-image {
-    width: 100%;
-    margin: 0 0 10px 0;
+    display: block;
     float: none;
+    width: 74%;
+    max-width: 74%;
+    margin: 0 auto 10px auto;
   }
 }
 
