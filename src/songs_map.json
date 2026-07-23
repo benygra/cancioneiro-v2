@@ -1,0 +1,764 @@
+{
+  "deixa_deus_entrar": {
+    "title": "Deixa Deus entrar",
+    "moment": "Entrada",
+    "tone": "D",
+    "add": "0"
+  },
+  "vem_com_alegria": {
+    "title": "Vêm com Alegria",
+    "moment": "Entrada",
+    "tone": "D",
+    "add": "0"
+  },
+  "vem_dai": {
+    "title": "Vem daí",
+    "moment": "CF, Entrada",
+    "tone": "D",
+    "add": "0"
+  },
+  "senhor_quem_entrara_no_santuario": {
+    "title": "Senhor quem entrará no santuário",
+    "moment": "Entrada",
+    "tone": "D",
+    "add": "0"
+  },
+  "vinde_louvar_o_senhor": {
+    "title": "Vinde Louvar o Senhor",
+    "moment": "Entrada",
+    "tone": "D",
+    "add": "0"
+  },
+  "sabor_da_maca": {
+    "title": "Sabor da Maçã",
+    "moment": "Entrada",
+    "tone": "E",
+    "add": "0"
+  },
+  "feliz_caminhar": {
+    "title": "Feliz Caminhar",
+    "moment": "Entrada",
+    "tone": "A",
+    "add": "0"
+  },
+  "em_nome_do_pai": {
+    "title": "Em nome do Pai",
+    "moment": "Entrada",
+    "tone": "G",
+    "add": "0"
+  },
+  "eis-me_aqui_senhor": {
+    "title": "Eis-me aqui, Senhor!",
+    "moment": "Entrada",
+    "tone": "E",
+    "add": "0"
+  },
+  "senhor_jesus_nos_vamos_a_ti": {
+    "title": "Senhor Jesus nós vamos a Ti",
+    "moment": "Entrada",
+    "tone": "C",
+    "add": "0"
+  },
+  "vamos_entrando_na_casa_de_deus": {
+    "title": "Vamos entrando na casa de Deus",
+    "moment": "Entrada, Catequese",
+    "tone": "F",
+    "add": "0"
+  },
+  "senhor_tende_piedade": {
+    "title": "Senhor Tende Piedade",
+    "moment": "Ato Penitencial",
+    "tone": "C",
+    "add": "0"
+  },
+  "perdoa_senhor": {
+    "title": "Perdoa Senhor",
+    "moment": "Ato Penitencial",
+    "tone": "F",
+    "add": "0"
+  },
+  "gloria_gloria_gloria": {
+    "title": "Glória Glória Glória",
+    "moment": "Ato Penitencial, Catequese",
+    "tone": "F",
+    "add": "0"
+  },
+  "canta_aleluia_ao_senhor": {
+    "title": "Canta Aleluia ao Senhor",
+    "moment": "Aleluia, Canon",
+    "tone": "Am",
+    "add": "0"
+  },
+  "louvor_e_gloria_a_vos_senhor": {
+    "title": "Louvor e Glória a vós Senhor",
+    "moment": "Aleluia, Quaresma, Canon",
+    "tone": "Am",
+    "add": "0"
+  },
+  "senhor_que_vieste_salvar": {
+    "title": "Senhor que vieste salvar",
+    "moment": "Ato Penitencial",
+    "tone": "D",
+    "add": "0"
+  },
+  "senhor_tem_piedade_somos_o_teu_povo_pecador": {
+    "title": "Senhor tem piedade (Somos o Teu povo pecador)",
+    "moment": "Ato Penitencial",
+    "tone": "C#",
+    "add": "0"
+  },
+  "senhor_misericordia": {
+    "title": "Senhor misericórdia (Montjo)",
+    "moment": "Ato Penitencial, Mariana",
+    "tone": "C",
+    "add": "0"
+  },
+  "aleluia_a_palavra_e_deus_em_nos": {
+    "title": "Aleluia (a palavra é Deus em nós)",
+    "moment": "Aleluia",
+    "tone": "A",
+    "add": "0"
+  },
+  "aleluia_deus_esta": {
+    "title": "Aleluia Deus está",
+    "moment": "Aleluia",
+    "tone": "G",
+    "add": "0"
+  },
+  "aleluia_a_palavra_de_deus_e_vida": {
+    "title": "Aleluia #25 A Palavra de Deus é vida",
+    "moment": "Aleluia",
+    "tone": "C",
+    "add": "0"
+  },
+  "dar_mais": {
+    "title": "Dar mais",
+    "moment": "Ofertório",
+    "tone": "G",
+    "add": "0"
+  },
+  "vasos_de_barro": {
+    "title": "Vasos de barro",
+    "moment": "Ofertório",
+    "tone": "C",
+    "add": "0"
+  },
+  "a_ti_meu_deus": {
+    "title": "A Ti meu Deus",
+    "moment": "Ofertório",
+    "tone": "E",
+    "add": "0"
+  },
+  "ao_teu_altar": {
+    "title": "Ao Teu Altar",
+    "moment": "Ofertório",
+    "tone": "C",
+    "add": "0"
+  },
+  "tomai_senhor_oracao_de_santo_inacio": {
+    "title": "Tomai Senhor (Oração de Santo Inácio)",
+    "moment": "Ofertório",
+    "tone": "A",
+    "add": "0"
+  },
+  "senhor_ensina-me_a_viver": {
+    "title": "Senhor ensina-me a viver",
+    "moment": "Ofertório, CF",
+    "tone": "D",
+    "add": "0"
+  },
+  "embarcar_deixar_para_tras": {
+    "title": "Embarcar",
+    "moment": "Ofertório",
+    "tone": "B",
+    "add": "0"
+  },
+  "quando_nos_te_ofertamos": {
+    "title": "Quando nós te ofertamos",
+    "moment": "Ofertório, Mariana",
+    "tone": "G",
+    "add": "0"
+  },
+  "santo_01": {
+    "title": "Santo #01",
+    "moment": "Santo",
+    "tone": "Am",
+    "add": "0"
+  },
+  "santo_rock": {
+    "title": "Santo Rock",
+    "moment": "Santo",
+    "tone": "F",
+    "add": "0"
+  },
+  "santo_santo_e_o_senhor": {
+    "title": "Santo Santo é o Senhor",
+    "moment": "Santo",
+    "tone": "C",
+    "add": "0"
+  },
+  "santo_05_es_tu_senhor": {
+    "title": "Santo és Tu Senhor #05",
+    "moment": "Santo",
+    "tone": "C",
+    "add": "0"
+  },
+  "santo_e_o_senhor_meu_deus": {
+    "title": "Santo é o Senhor meu Deus",
+    "moment": "Santo",
+    "tone": "F#m",
+    "add": "0"
+  },
+  "cordeiro_de_deus_02": {
+    "title": "Cordeiro de Deus #02",
+    "moment": "Cordeiro de Deus",
+    "tone": "G",
+    "add": "0"
+  },
+  "cordeiro_de_deus_06": {
+    "title": "Cordeiro de Deus #06",
+    "moment": "Cordeiro de Deus",
+    "tone": "D",
+    "add": "0"
+  },
+  "cordeiro_de_deus_padre_tarcizio_morais": {
+    "title": "Cordeiro de Deus Padre Tarcízio Morais",
+    "moment": "CF, Cordeiro de Deus",
+    "tone": "C",
+    "add": "0"
+  },
+  "cordeiro_nos_deus_mariana": {
+    "title": "Cordeiro de Deus Mariana",
+    "moment": "Cordeiro de Deus, Mariana",
+    "tone": "C",
+    "add": "0"
+  },
+  "pai_nosso_galego": {
+    "title": "Pai Nosso Galego (Junto ao mar)",
+    "moment": "Pai Nosso",
+    "tone": "G",
+    "add": "0"
+  },
+  "pao_do_ceu": {
+    "title": "Pão do Céu",
+    "moment": "Comunhão",
+    "tone": "C",
+    "add": "0"
+  },
+  "tomo_este_pao_e_este_vinho": {
+    "title": "Tomo este pão e este vinho",
+    "moment": "Comunhão",
+    "tone": "C",
+    "add": "0"
+  },
+  "e_o_meu_corpo": {
+    "title": "É o meu Corpo (Como o Senhor nos amou)",
+    "moment": "Comunhão",
+    "tone": "C",
+    "add": "0"
+  },
+  "bendito_bendito_sejas": {
+    "title": "Bendito, Bendito sejas",
+    "moment": "Comunhão",
+    "tone": "D",
+    "add": "0"
+  },
+  "via_de_amor": {
+    "title": "Via de amor",
+    "moment": "CF, Comunhão",
+    "tone": "C",
+    "add": "0"
+  },
+  "igreja_reunida": {
+    "title": "Igreja reunida (Já se ouvem nossos passos, Como são belos os pés)",
+    "moment": "Entrada, Comunhão",
+    "tone": "C",
+    "add": "0"
+  },
+  "pai_santo_eu_te_adoro": {
+    "title": "Pai Santo eu Te adoro",
+    "moment": "Adoração, Ação de Graças",
+    "tone": "D",
+    "add": "0"
+  },
+  "meu_deus_eu_creio": {
+    "title": "Meu Deus eu creio",
+    "moment": "Adoração",
+    "tone": "Em",
+    "add": "0"
+  },
+  "tu_es_o_sol": {
+    "title": "Tu és o Sol",
+    "moment": "Mariano, Ação de Graças",
+    "tone": "D",
+    "add": "0"
+  },
+  "maria_de_nazare": {
+    "title": "Maria de Nazaré",
+    "moment": "Mariano, Ação de Graças",
+    "tone": "D",
+    "add": "0"
+  },
+  "quero_ser_como_tu_maria": {
+    "title": "Quero ser como tu Maria",
+    "moment": "Mariano, Ação de Graças",
+    "tone": "C",
+    "add": "0"
+  },
+  "nossa_senhora_do_sim": {
+    "title": "Nossa Senhora do Sim",
+    "moment": "Mariano, Ação de Graças",
+    "tone": "G",
+    "add": "0"
+  },
+  "maravilhas_fez_em_mim": {
+    "title": "Maravilhas",
+    "moment": "Mariano, Ação de Graças",
+    "tone": "C",
+    "add": "0"
+  },
+  "consagracao_a_nossa_senhora": {
+    "title": "Consagração a Nossa Senhora",
+    "moment": "Mariano, Ação de Graças",
+    "tone": "E",
+    "add": "0"
+  },
+  "bendizemos_o_teu_nome": {
+    "title": "Bendizemos o Teu nome",
+    "moment": "Mariano",
+    "tone": "D",
+    "add": "0"
+  },
+  "tua_voz_nos_chamou": {
+    "title": "Tua voz nos chamou",
+    "moment": "Ação de Graças",
+    "tone": "D",
+    "add": "0"
+  },
+  "oceans": {
+    "title": "Oceans",
+    "moment": "Ação de Graças",
+    "tone": "Bm",
+    "add": "0"
+  },
+  "oceans_cf": {
+    "title": "Oceans (Versão CF)",
+    "moment": "Ação de Graças, CF",
+    "tone": "Bm",
+    "add": "0"
+  },
+  "obrigado_por_este_dia_que_passou": {
+    "title": "Obrigado (Por este dia que passou)",
+    "moment": "Ação de Graças",
+    "tone": "C",
+    "add": "0"
+  },
+  "vem_viver_em_nos_senhor": {
+    "title": "Vem Viver em nós Senhor",
+    "moment": "Taizé, Ação de Graças",
+    "tone": "D",
+    "add": "0"
+  },
+  "ora_e_vigia": {
+    "title": "Ora e Vigia",
+    "moment": "Taizé, Ação de Graças",
+    "tone": "Dm",
+    "add": "0"
+  },
+  "deus_e_amor_taize": {
+    "title": "Deus é amor",
+    "moment": "Taizé, Ação de Graças",
+    "tone": "D",
+    "add": "0"
+  },
+  "cantarei_ao_senhor": {
+    "title": "Cantarei ao Senhor",
+    "moment": "Taizé, Ação de Graças",
+    "tone": "Em",
+    "add": "0"
+  },
+  "cantarei_ao_senhor_2": {
+    "title": "Cantarei ao Senhor",
+    "moment": "Taizé, Ação de Graças",
+    "tone": "Bm",
+    "add": "0"
+  },
+  "senhor_vela_por_mim": {
+    "title": "Senhor vela por mim",
+    "moment": "Duas vezes, Ação de Graças",
+    "tone": "C",
+    "add": "0"
+  },
+  "vou-te_mostrar": {
+    "title": "Vou-te mostrar",
+    "moment": "Duas vezes, Ação de Graças, CF",
+    "tone": "Em",
+    "add": "0"
+  },
+  "mostra-me_senhor_os_teus_caminhos": {
+    "title": "Mostra-me Senhor os Teus caminhos",
+    "moment": "Ação de Graças, Canon",
+    "tone": "D",
+    "add": "0"
+  },
+  "cria_em_mim_o_deus": {
+    "title": "Cria em mim ó Deus",
+    "moment": "Adoração, Ação de Graças, CF",
+    "tone": "G",
+    "add": "0"
+  },
+  "porque_toda_a_vida_vem_de_ti": {
+    "title": "Porque toda a vida vem de Ti",
+    "moment": "Adoração, Vigília",
+    "tone": "D",
+    "add": "0"
+  },
+  "eu_nao_sou_nada": {
+    "title": "Eu não sou nada",
+    "moment": "Ação de Graças",
+    "tone": "C",
+    "add": "0"
+  },
+  "entrega": {
+    "title": "Entrega",
+    "moment": "Duas vezes, Ação de Graças",
+    "tone": "Eb",
+    "add": "0"
+  },
+  "vede_senhor_quanta_gente": {
+    "title": "Vêde Senhor",
+    "moment": "Ação de Graças",
+    "tone": "D",
+    "add": "0"
+  },
+  "queira_eu_o_que_deus_quer": {
+    "title": "Queira eu o que Deus quer",
+    "moment": "Duas vezes, Ação de Graças",
+    "tone": "Bm",
+    "add": "0"
+  },
+  "renasce_em_mim": {
+    "title": "Renasce em mim",
+    "moment": "Duas vezes, Ação de Graças",
+    "tone": "Em",
+    "add": "0"
+  },
+  "cristo_em_mim": {
+    "title": "Cristo em mim",
+    "moment": "Duas vezes, Ação de Graças",
+    "tone": "G",
+    "add": "0"
+  },
+  "pedacinho_de_deus": {
+    "title": "Pedacinho de Deus",
+    "moment": "Escuteiros, Ação de Graças, Final",
+    "tone": "A",
+    "add": "0"
+  },
+  "vem_espirito_eu_quero_amar": {
+    "title": "Vem Espírito (Eu quero amar)",
+    "moment": "Adoração, Vigília, Ação de Graças",
+    "tone": "G",
+    "add": "0"
+  },
+  "ninguem_te_ama_como_eu": {
+    "title": "Ninguém te ama como Eu",
+    "moment": "Adoração, Vigília, Ação de Graças",
+    "tone": "C",
+    "add": "0"
+  },
+  "sopro_leve": {
+    "title": "Sopro leve",
+    "moment": "Adoração, Vigília, Ação de Graças",
+    "tone": "Eb",
+    "add": "0"
+  },
+  "luz_terna_e_suave_no_meio_da_noite": {
+    "title": "Luz terna e suave",
+    "moment": "Duas vezes, Adoração, Vigília",
+    "tone": "G",
+    "add": "0"
+  },
+  "nao_adores_nunca_ninguem_mais_que_a_deus": {
+    "title": "Não adores",
+    "moment": "Vigília, Ação de Graças",
+    "tone": "C",
+    "add": "0"
+  },
+  "quero_louvar-te": {
+    "title": "Quero louvar-Te",
+    "moment": "Adoração, Vigília, Ação de Graças",
+    "tone": "D",
+    "add": "0"
+  },
+  "ruinas": {
+    "title": "Ruínas",
+    "moment": "Ação de Graças, CF",
+    "tone": "C",
+    "add": "0"
+  },
+  "es_a_minha_vida": {
+    "title": "És a minha vida",
+    "moment": "Ação de Graças",
+    "tone": "Em",
+    "add": "0"
+  },
+  "espirito_fonte_de_vida": {
+    "title": "Espírito, fonte de vida",
+    "moment": "GJC, Ação de Graças",
+    "tone": "A",
+    "add": "0"
+  },
+  "homem-deus_no_coracao": {
+    "title": "Homem-Deus no coração",
+    "moment": "GJC, Ação de Graças",
+    "tone": "A",
+    "add": "0"
+  },
+  "senhor_tu_me_perscrutas": {
+    "title": "Senhor, Tu me perscrutas",
+    "moment": "GJC, Ação de Graças",
+    "tone": "C",
+    "add": "0"
+  },
+  "so_deus_basta": {
+    "title": "Só deus basta",
+    "moment": "Ação de Graças",
+    "tone": "A",
+    "add": "0"
+  },
+  "oracao_de_sao_pedro": {
+    "title": "Oração de São Pedro",
+    "moment": "Ação de Graças",
+    "tone": "C",
+    "add": "0"
+  },
+  "isaias_35": {
+    "title": "Isaías 35",
+    "moment": "Ação de Graças, CF",
+    "tone": "F#m",
+    "add": "0"
+  },
+  "tao_perto_de_mim": {
+    "title": "Tão perto de mim",
+    "moment": "Final",
+    "tone": "C",
+    "add": "0"
+  },
+  "espirito_santo_sopro_de_vida": {
+    "title": "Espírito Santo, Sopro de vida",
+    "moment": "Crismas",
+    "tone": "Em",
+    "add": "0"
+  },
+  "se_me_envolve_a_noite_escura_nada_temo": {
+    "title": "Se me envolve a noite escura / Nada temo",
+    "moment": "Adoração, Ação de Graças",
+    "tone": "D",
+    "add": "0"
+  },
+  "bom_pastor": {
+    "title": "Bom pastor",
+    "moment": "Adoração, Final",
+    "tone": "D",
+    "add": "0"
+  },
+  "deus_de_amor": {
+    "title": "Deus de amor",
+    "moment": "Ação de Graças, Final",
+    "tone": "A",
+    "add": "0"
+  },
+  "cantarei_se_cres_em_deus": {
+    "title": "Cantarei (Se crês em Deus)",
+    "moment": "Ação de Graças, Final",
+    "tone": "C",
+    "add": "0"
+  },
+  "onde_deus_te_levar": {
+    "title": "Onde Deus te levar",
+    "moment": "Final",
+    "tone": "G",
+    "add": "0"
+  },
+  "confiarei_o_senhor_e_meu_pastor": {
+    "title": "Confiarei (O Senhor é meu pastor)",
+    "moment": "Final",
+    "tone": "D",
+    "add": "0"
+  },
+  "estrela_polar": {
+    "title": "Estrela polar",
+    "moment": "Escuteiros, Final, CF",
+    "tone": "F#m",
+    "add": "0"
+  },
+  "nao_fiques_na_praia": {
+    "title": "Não fiques na praia",
+    "moment": "Final",
+    "tone": "A",
+    "add": "0"
+  },
+  "sao_tiago_ao_acordar_diz-me_o_despertador": {
+    "title": "São Tiago (Ao acordar diz-me o despertador)",
+    "moment": "Final",
+    "tone": "C",
+    "add": "0"
+  },
+  "esta_luz_pequenina": {
+    "title": "Esta luz pequenina",
+    "moment": "Catequese",
+    "tone": "D",
+    "add": "0"
+  },
+  "passo_a_passo_grao_a_grao": {
+    "title": "Passo a passo grão a grão",
+    "moment": "Catequese, Final",
+    "tone": "D",
+    "add": "0"
+  },
+  "eu_tenho_um_amigo_que_me_ama": {
+    "title": "Eu tenho um amigo que me ama",
+    "moment": "Catequese",
+    "tone": "D",
+    "add": "0"
+  },
+  "deus_esta_aqui": {
+    "title": "Deus está aqui",
+    "moment": "Catequese",
+    "tone": "D",
+    "add": "0"
+  },
+  "deus_precisa_de_ti": {
+    "title": "Deus precisa de ti",
+    "moment": "Catequese, CF",
+    "tone": "D",
+    "add": "0"
+  },
+  "ha_pressa_no_ar": {
+    "title": "Há pressa no ar (Hino JMJ)",
+    "moment": "JMJ",
+    "tone": "E",
+    "add": "0"
+  },
+  "ave_maria_mae_da_igreja": {
+    "title": "Avé Maria Mãe da Igreja",
+    "moment": "Mariano, Entrada",
+    "tone": "C",
+    "add": "0"
+  },
+  "cristo_quer_a_tua_ajuda": {
+    "title": "Cristo quer a tua ajuda",
+    "moment": "GJC, Final",
+    "tone": "Em",
+    "add": "0"
+  },
+  "ide_e_dai_de_graca": {
+    "title": "Ide e dai de graça",
+    "moment": "GJC, Final",
+    "tone": "C",
+    "add": "0"
+  },
+  "deus_em_mim": {
+    "title": "Deus em mim",
+    "moment": "Mariano, Final",
+    "tone": "B",
+    "add": "0"
+  },
+  "super_heroi": {
+    "title": "Super-herói",
+    "moment": "Final, Outros",
+    "tone": "C",
+    "add": "0"
+  },
+  "festa_de_deus_hino_conviva": {
+    "title": "Festa de Deus - Hino Conviva (pág. 146)",
+    "moment": "CF",
+    "tone": "C",
+    "add": "0"
+  },
+  "cristo_e_a_forca_oi-o-ai": {
+    "title": "Cristo é a força - Oi-o-ai (pág. 155)",
+    "moment": "CF",
+    "tone": "F",
+    "add": "0"
+  },
+  "amanha": {
+    "title": "Amanhã (pág. 138)",
+    "moment": "CF",
+    "tone": "C",
+    "add": "0"
+  },
+  "somente_a_ele_olare": {
+    "title": "Somente a Ele - Olaré (pág. 159)",
+    "moment": "CF",
+    "tone": "C",
+    "add": "0"
+  },
+  "ser_jovem": {
+    "title": "Ser jovem (pág. 144)",
+    "moment": "CF",
+    "tone": "C#",
+    "add": "0"
+  },
+  "somos_um": {
+    "title": "Somos um",
+    "moment": "Escuteiros, CF",
+    "tone": "G",
+    "add": "0"
+  },
+  "dou-vos_um_mandamento_novo": {
+    "title": "Dou-vos um mandamento novo",
+    "moment": "CF",
+    "tone": "C",
+    "add": "0"
+  },
+  "pois_eu_queria_saber_porque": {
+    "title": "Pois eu queria saber porquê?",
+    "moment": "CF",
+    "tone": "Am/A",
+    "add": "0"
+  },
+  "sei": {
+    "title": "Sei",
+    "moment": "CF",
+    "tone": "D",
+    "add": "0"
+  },
+  "ressuscitou": {
+    "title": "Ressuscitou",
+    "moment": "CF",
+    "tone": "Em",
+    "add": "0"
+  },
+  "quem_me_seguir": {
+    "title": "Quem me seguir",
+    "moment": "Paulo",
+    "tone": "C",
+    "add": "0"
+  },
+  "tudo_posso": {
+    "title": "Tudo posso",
+    "moment": "Paulo",
+    "tone": "G",
+    "add": "0"
+  },
+  "recebe_senhor_os_nossos_dons": {
+    "title": "Recebe Senhor os nossos dons",
+    "moment": "Ofertório, Paulo",
+    "tone": "G",
+    "add": "0"
+  },
+  "abencoa_o_nosso_sim": {
+    "title": "Abençoa o Nosso Sim",
+    "moment": "Casamento",
+    "tone": "D",
+    "add": "0"
+  },
+  "abencoa_o_nosso_sim_2": {
+    "title": "Abençoa o Nosso Sim",
+    "moment": "Casamento",
+    "tone": "A",
+    "add": "0"
+  }
+}

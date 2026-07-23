@@ -167,6 +167,10 @@
   margin-bottom: 20px;
 }
 
+.lyrics-meta-item * {
+  padding: 0 2%;
+}
+
 .lyrics {
   line-height: 1.5;
 }
@@ -214,12 +218,11 @@ pre {
 }
 
 .songs {
-  padding: 20px;
+  padding: 0 20px;
 }
 
 .songs-table {
   width: 100%;
-  margin-top: 20px;
 }
 
 .songs-table th {
@@ -234,7 +237,7 @@ pre {
 }
 
 .songs-table td {
-  padding: 10px;
+  padding: 13px;
   border-bottom: 1px solid var(--btn-bg-color);
 }
 
@@ -330,7 +333,7 @@ pre {
 
   .songs-table th,
   .songs-table td {
-    padding: 5px;
+    padding: 10px;
     font-size: 0.9em;
   }
 
