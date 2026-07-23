@@ -1,6 +1,10 @@
 <script setup>
 import { defineProps } from 'vue';
 
+import { useCart } from '@/composables/useCart'
+
+const { addToCart } = useCart();
+
 defineProps({
   song: Object,
   id: String,
@@ -12,6 +16,6 @@ defineProps({
     <td><a target="_blank" :href="`/songs/${id}`">{{ song.title }}</a></td>
     <td>{{ song.moment }}</td>
     <td>{{ song.tone }}</td>
-    <td>{{ song.add }}</td>
+    <td><button class="btn" @click="addToCart(id, song)">+</button></td>
   </tr>
 </template>
