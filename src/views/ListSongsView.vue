@@ -10,6 +10,9 @@ const songs = ref(songs_map);
 
 const sortColumn = ref(null);
 const sortOrder = ref('asc');
+const searchQuery = ref('');
+
+const filteredSongs = ref(Object.entries(songs.value));
 
 function sortBy(column) {
   if (sortColumn.value === column) {
@@ -22,8 +25,24 @@ function sortBy(column) {
   }
 }
 
-const sortedSongs = computed(() => {
+function filterSongs() {
   const entries = Object.entries(songs.value);
+  const query = searchQuery.value.trim().toLowerCase();
+
+  if (!query) {
+    filteredSongs.value = entries;
+    return;
+  }
+
+  filteredSongs.value = entries.filter(([, song]) => {
+    const title = (song.title || '').toLowerCase();
+    const moment = (song.moment || '').toLowerCase();
+    return title.includes(query) || moment.includes(query);
+  });
+}
+
+const sortedSongs = computed(() => {
+  const entries = filteredSongs.value;
 
   if (!sortColumn.value) return entries;
 
@@ -63,6 +82,12 @@ const toggle = (sortColumn, desiredColumn, sortOrder) => {
     <h2 class="section-header">CANCIONEIRO</h2>
 
     <div class="songs">
+        <div class="text-input">
+            <input type="text" id="search-input" v-model="searchQuery" placeholder="Pesquisar cânticos..." class="search-input" @keyup.enter="filterSongs">
+            <img src="@/assets/img/magnifier.png" alt="magnifier" class="magnifier" @click="filterSongs">
+        </div>
+        
+
         <table class="songs-table">
             <thead>
                 <tr>
@@ -101,4 +126,15 @@ const toggle = (sortColumn, desiredColumn, sortOrder) => {
     color: white;
     font-weight: bold;
 }
+
+.text-input {
+    display: flex;
+}
+
+.magnifier {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
 </style>

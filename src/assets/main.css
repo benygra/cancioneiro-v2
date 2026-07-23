@@ -193,6 +193,7 @@ pre {
 
 .songs-table {
   width: 100%;
+  padding-top: 20px;
 }
 
 .songs-table th {
