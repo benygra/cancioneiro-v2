@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { PDFDocument } from 'pdf-lib'
 
 import CartListing from './CartListing.vue'
 import { useCart } from '@/composables/useCart'
@@ -9,6 +10,38 @@ const { cart, removeFromCart } = useCart()
 const isOpen = ref(false)
 
 const toggleCart = () => isOpen.value = !isOpen.value;
+
+async function downloadPdf(pdfBytes, filename) {
+  const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+  const link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+}
+
+async function fetchPDF(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch PDF: ${response.statusText}`);
+  }
+  const arrayBuffer = await response.arrayBuffer();
+  return new Uint8Array(arrayBuffer);
+}
+
+async function mergePDFs () {
+  const pdfDoc = await PDFDocument.create();
+
+  for (const id of cart.value.keys()) {
+    const url = '/data/pdf/' + id + ".pdf";
+    const pdfBytes = await fetchPDF(url);
+    const pdf = await PDFDocument.load(pdfBytes);
+    const copiedPages = await pdfDoc.copyPages(pdf, pdf.getPageIndices());
+    copiedPages.forEach(page => pdfDoc.addPage(page));
+  }
+  
+  const mergedPdfBytes = await pdfDoc.save();
+  downloadPdf(mergedPdfBytes, 'merged.pdf');
+}
 
 </script>
 
@@ -24,7 +57,7 @@ const toggleCart = () => isOpen.value = !isOpen.value;
     <Transition name="cart">
       <div v-if="isOpen" class="cart-panel">
         <ul id="cart-list" class="cart-list">
-          <li class="merge"><img src="@/assets/img/pdfs-merge.png" alt="pdfs-merge" class="pdf-merge-icon"></li>
+          <li class="merge" @click="mergePDFs"><img src="@/assets/img/pdfs-merge.png" alt="pdfs-merge" class="pdf-merge-icon"></li>
           <CartListing
             v-for="[id, song] in cart"
             :key="id"
@@ -47,6 +80,8 @@ const toggleCart = () => isOpen.value = !isOpen.value;
   height: 64px;
   border-radius: 50%;
 
+  border-color: var(--cart-bg-color);
+
   z-index: 1000;
 }
 
@@ -67,7 +102,7 @@ const toggleCart = () => isOpen.value = !isOpen.value;
 }
 
 .pdf-merge-icon {
-  width: 100px;
+  width: 121px;
   padding: 6px;
 }
 
@@ -90,7 +125,6 @@ const toggleCart = () => isOpen.value = !isOpen.value;
 @media (max-width: 768px) {
 .pdf-merge-icon {
   width: 150px;
-  padding: 6px;
 }
 }
 
