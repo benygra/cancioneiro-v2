@@ -31,10 +31,6 @@ const LyricsComponent = computed(() => {
                 <strong class="lyrics-meta-title">Momento</strong>
                 <span id="song-moment" class="lyrics-meta-subtitle normal-text">{{ song.moment }}</span>
             </div>
-            <div class="lyrics-meta-item">
-                <strong class="lyrics-meta-title">Adicionada</strong>
-                <span class="lyrics-meta-subtitle normal-text">dadada</span>
-            </div>
         </div>
 
         <div class="lyrics">

@@ -9,7 +9,7 @@ defineProps({
 
 <template>
   <tr>
-    <td><a target="_blank" :href="`/list_songs/${id}`">{{ song.title }}</a></td>
+    <td><a target="_blank" :href="`/songs/${id}`">{{ song.title }}</a></td>
     <td>{{ song.moment }}</td>
     <td>{{ song.tone }}</td>
     <td>{{ song.add }}</td>

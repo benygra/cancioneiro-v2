@@ -1,5 +1,5 @@
 <template>
-    <pre><span class="chord">
+        <pre><span class="chord">
                 E                                      F#m</span>
 A ti meu Deus, elevo o meu coração<span class="chord">
                               B7                  A                   E</span>

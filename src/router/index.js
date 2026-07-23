@@ -13,12 +13,12 @@ const router = createRouter({
             component: HomeView,
         },
         {
-            path: '/list_songs',
-            name: 'list_songs',
+            path: '/songs',
+            name: 'songs',
             component: ListSongsView,
         },
         {
-            path: '/list_songs/:id',
+            path: '/songs/:id',
             name: 'song_detail',
             component: SongView,
             props: true,
