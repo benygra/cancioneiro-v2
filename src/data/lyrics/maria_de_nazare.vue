@@ -23,7 +23,7 @@ senhora e mãe do céu.
 <strong><span class="chord">
       D           Em</span>
 ||: Avé Maria,<span class="chord">
-A7         D</span></span>
+A7         D</span>
 avé Maria,<span class="chord">
 D7        Em  A7              D</span>
 avé Maria, Mãe de Jesus :||</strong>
@@ -51,7 +51,7 @@ Maria do povo meu.
 <strong><span class="chord">
       D           Em</span>
 ||: Avé Maria,<span class="chord">
-A7         D</span></span>
+A7         D</span>
 avé Maria,<span class="chord">
 D7        Em  A7              D</span>
 avé Maria, Mãe de Jesus :||</strong>

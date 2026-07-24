@@ -14,7 +14,7 @@ A vós entregarei<span class="chord">
           F                                    G</span>
 Bem mais do que vós me destes<i><span class="chord">
                C</span>
-E muito mais...</strong></i>
+E muito mais...</i></strong>
 <span class="chord">
     C                 Am          F                          G</span>
 Dizei pelo caminho, o reino está a chegar<span class="chord">
