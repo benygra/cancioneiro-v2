@@ -10,10 +10,10 @@ const props = defineProps({
 
 const song = computed(() => songs_map[props.id]);
 
-const lyricModules = import.meta.glob('@/data/lyrics/*.vue');
+const lyricModules = import.meta.glob('@/assets/lyrics/*.vue');
 
 const LyricsComponent = computed(() => {
-  const path = `/src/data/lyrics/${props.id}.vue`;
+  const path = `/src/assets/lyrics/${props.id}.vue`;
   return lyricModules[path]
     ? defineAsyncComponent(lyricModules[path])
     : null;
