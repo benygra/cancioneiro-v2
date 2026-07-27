@@ -1,17 +1,23 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
-const cart = ref(new Map())
+import songs_map from '@/assets/songs_map.json';
+
+const cart = ref([]);
 
 export function useCart() {
-  function addToCart(id, song) {
-    if (!cart.value.has(id)) {
-      cart.value.set(id, {...song });
-      console.log("Added " + id);
-    }
+  function addToCart(id) {
+    const exists = cart.value.some(item => item.id === id);
+    if (exists) return;
+
+    const song = computed(() => songs_map[id]);
+    cart.value.push({ id, song });
   }
 
   function removeFromCart(id) {
-        cart.value.delete(id);
+    const idx = cart.value.findIndex(item => item.id === id);
+    if (idx !== -1) {
+      cart.value.splice(idx, 1);
+    }
   }
 
   return { cart, addToCart, removeFromCart };

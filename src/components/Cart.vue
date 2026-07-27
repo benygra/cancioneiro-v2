@@ -8,16 +8,6 @@ import { useCart } from '@/composables/useCart'
 
 const { cart, removeFromCart } = useCart()
 
-const cartItems = computed({
-  get() {
-    return Array.from(cart.value.entries()).map(([id, song]) => ({ id, song }))
-  },
-  set(newItems) {
-    // Rebuild the Map in the new order
-    cart.value = new Map(newItems.map(item => [item.id, item.song]))
-  }
-})
-
 const isOpen = ref(false)
 
 const toggleCart = () => isOpen.value = !isOpen.value;
@@ -42,7 +32,7 @@ async function fetchPDF(url) {
 async function mergePDFs () {
   const pdfDoc = await PDFDocument.create();
 
-  for (const id of cart.value.keys()) {
+  for (const {id, song} of cart.value) {
     const url = '/data/pdf/' + id + ".pdf";
     const pdfBytes = await fetchPDF(url);
     const pdf = await PDFDocument.load(pdfBytes);
@@ -64,7 +54,6 @@ async function mergePDFs () {
     <img class="cart-icon" src="@/assets/img/cart.png" alt="car">
   </button>
 
-
   <div v-if="isOpen" class="cart-panel">
     <ul class="cart-list">
       <li class="merge-item" @click="mergePDFs">
@@ -77,7 +66,7 @@ async function mergePDFs () {
     </ul>
 
     <draggable
-      v-model="cartItems"
+      v-model="cart"
       item-key="id"
       tag="ul"
       class="cart-list"

@@ -15,7 +15,7 @@ defineProps({
     <td><a target="_blank" :href="`/songs/${id}`">{{ song.title }}</a></td>
     <td>{{ song.moment }}</td>
     <td>{{ song.tone }}</td>
-    <td><button class="btn" @click="addToCart(id, song)">+</button></td>
+    <td><button class="btn" @click="addToCart(id)">+</button></td>
   </tr>
 </template>
 
