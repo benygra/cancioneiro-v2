@@ -1,13 +1,12 @@
 <script setup>
 
-import { defineProps, defineEmits } from 'vue';
-
 defineProps({
     song: Object,
     id: String,
-})
+});
 
-defineEmits(['remove'])
+defineEmits(['remove']);
+
 </script>
 
 <template>
@@ -18,11 +17,12 @@ defineEmits(['remove'])
 </template>
 
 <style scoped>
+
 .cart-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px;
+    padding: 0.5em;
 }
 
 .cart-item-title {
@@ -30,13 +30,13 @@ defineEmits(['remove'])
 }
 
 .cart-item-remove {
-    padding: 3px;
+    padding: 0.2em;
     font-weight: bold;
     background-color: red;
     border-radius: 2px;
     border-color: darkred;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.2em;
     line-height: 1;
 }
 

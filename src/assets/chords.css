@@ -1,0 +1,33 @@
+:root {
+    --chord-text-color: red;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.chord-style {
+  font-weight: bold;
+  color: var(--chord-text-color);
+}
+
+.chord {
+  font-weight: bold;
+  color: var(--chord-text-color);
+}
+
+.chord-space {
+  font-weight: normal;
+  color: var(--main-text-color);
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.normal-text {
+  font-weight: normal;
+  color: var(--main-text-color);
+}

@@ -2,6 +2,8 @@
 import { computed, defineAsyncComponent } from 'vue';
 import songs_map from '@/songs_map.json';
 
+import NotFound from '@/components/NotFound.vue';
+
 const props = defineProps({
   id: String,
 });
@@ -20,23 +22,61 @@ const LyricsComponent = computed(() => {
 
 <template>
   <div v-if="song">
-    <h2 class="section-header">{{ song.title }}</h2>
     <section class="content-section">
+      <h2 class="section-header">{{ song.title }}</h2>
         <div class="lyrics-meta">
             <div class="lyrics-meta-item">
                 <strong class="lyrics-meta-title">Tom</strong>
-                <span id="song-tone" class="lyrics-meta-subtitle chord-style">{{ song.tone }}</span>
+                <span class="chord-style">{{ song.tone }}</span>
             </div>
             <div class="lyrics-meta-item">
                 <strong class="lyrics-meta-title">Momento</strong>
-                <span id="song-moment" class="lyrics-meta-subtitle normal-text">{{ song.moment }}</span>
+                <span class="normal-text">{{ song.moment }}</span>
             </div>
         </div>
 
         <div class="lyrics">
-        <component :is="LyricsComponent" v-if="LyricsComponent" />
-        <p v-else>Letra não disponível.</p>
+          <component v-if="LyricsComponent" :is="LyricsComponent" />
+          <NotFound v-else :title="song.title" />
         </div>
     </section>
   </div>
+  <div v-else>
+    <NotFound />
+  </div>
 </template>
+
+<style scoped>
+
+.lyrics-meta {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  padding: 0.7em 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.lyrics-meta-title {
+  margin-right: 0.4em;
+}
+
+.lyrics {
+  line-height: 1.5;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .lyrics-meta-item {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .lyrics-meta-title {
+    margin-right: 0;
+  }
+}
+
+</style>

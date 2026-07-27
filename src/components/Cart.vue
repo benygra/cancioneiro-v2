@@ -53,36 +53,48 @@ async function mergePDFs () {
     <img class="cart-icon" src="@/assets/img/cart.png" alt="car">
   </button>
 
-  <Teleport to="body">
-    <Transition name="cart">
-      <div v-if="isOpen" class="cart-panel">
-        <ul id="cart-list" class="cart-list">
-          <li class="merge" @click="mergePDFs"><img src="@/assets/img/pdfs-merge.png" alt="pdfs-merge" class="pdf-merge-icon"></li>
-          <CartListing
-            v-for="[id, song] in cart"
-            :key="id"
-            :song="song"
-            @remove="removeFromCart(id)"
-          />
-        </ul>
-      </div>
-    </Transition>
-  </Teleport>
+
+  <div v-if="isOpen" class="cart-panel">
+    <ul class="cart-list">
+      <li class="merge-item" @click="mergePDFs">
+        <img 
+          class="pdf-merge-icon" 
+          src="@/assets/img/pdfs-merge.png" 
+          alt="pdfs-merge"
+        >
+      </li>
+      <CartListing
+        v-for="[id, song] in cart"
+        :key="id"
+        :song="song"
+        @remove="removeFromCart(id)"
+      />
+    </ul>
+  </div>
+
 </template>
 
 <style scoped>
+
 .cart-button {
   position: fixed;
   left: 20px;
   bottom: 20px;
 
-  width: 64px;
-  height: 64px;
+  width: 4.8em;
+  height: 4.8em;
   border-radius: 50%;
-
   border-color: var(--cart-bg-color);
-
   z-index: 1000;
+}
+
+.cart-icon {
+  display: inline-block;
+  width: 4.3em;
+  height: 4.3em;
+  background-size: cover;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 .cart-panel {
@@ -91,23 +103,20 @@ async function mergePDFs () {
   bottom: 95px;
 
   width: min(320px, calc(100vw - 40px));
-  max-height: 70vh;
-
+  max-height: 45vh;
   overflow: auto;
-
-  z-index: 1001;
-
   background-color: var(--cart-bg-color);
   border-radius: 5px;
+  z-index: 1001;
 }
 
 .pdf-merge-icon {
-  width: 121px;
-  padding: 6px;
+  width: 110px;
+  margin: 0.6em;
 }
 
 .pdf-merge-icon:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
   cursor: pointer;
 }
 
@@ -116,16 +125,10 @@ async function mergePDFs () {
   flex-direction: column;
 }
 
-.merge {
+.merge-item {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-@media (max-width: 768px) {
-.pdf-merge-icon {
-  width: 150px;
-}
 }
 
 </style>

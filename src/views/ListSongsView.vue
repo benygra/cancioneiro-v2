@@ -79,62 +79,123 @@ const toggle = (sortColumn, desiredColumn, sortOrder) => {
 </script>
 
 <template>
-    <h2 class="section-header">CANCIONEIRO</h2>
+    <section class="content-section songs">
+        <h2 class="section-header">CANCIONEIRO</h2>
 
-    <div class="songs">
-        <div class="text-input">
-            <input type="text" id="search-input" v-model="searchQuery" placeholder="Pesquisar cânticos..." class="search-input" @keyup.enter="filterSongs">
-            <img src="@/assets/img/magnifier.png" alt="magnifier" class="magnifier" @click="filterSongs">
+        <!-- User input to search the songs -->
+        <div class="user-input">
+            <input 
+                class="search-input" 
+                type="text" 
+                v-model="searchQuery" 
+                placeholder="Pesquisar cânticos..." 
+                @keyup.enter="filterSongs"
+            >
+            <img 
+                class="magnifier-image" 
+                src="@/assets/img/magnifier.png" 
+                alt="magnifier" 
+                @click="filterSongs"
+            >
         </div>
         
-
+        <!-- Songs table -->
         <table class="songs-table">
             <thead>
                 <tr>
-                <th @click="sortBy('title')">
-                    Título
-                    <span class="order">{{ toggle(sortColumn, 'title', sortOrder) }}</span>
-                </th>
-                <th @click="sortBy('moment')">
-                    Momento
-                    <span class="order">{{ toggle(sortColumn, 'moment', sortOrder) }}</span>
-                </th>
-                <th @click="sortBy('tone')">
-                    Tom
-                    <span class="order">{{ toggle(sortColumn, 'tone', sortOrder) }}</span>
-                </th>
-                <th>Adicionada</th>
+                    <th @click="sortBy('title')">
+                        Título
+                        <span class="order">{{ toggle(sortColumn, 'title', sortOrder) }}</span>
+                    </th>
+                    <th @click="sortBy('moment')">
+                        Momento
+                        <span class="order">{{ toggle(sortColumn, 'moment', sortOrder) }}</span>
+                    </th>
+                    <th @click="sortBy('tone')">
+                        Tom
+                        <span class="order">{{ toggle(sortColumn, 'tone', sortOrder) }}</span>
+                    </th>
+                    <th>
+                        Adicionada
+                    </th>
                 </tr>
             </thead>
-            <tbody id="songs-list">
+            <tbody>
                 <SongListing
                     v-for="[id, song] in sortedSongs"
                     :key="id"
                     :song="song"
                     :id="id"
                 />
+                <tr v-if="sortedSongs.length === 0">
+                    <td colspan="4" class="no-results">
+                        Nenhum cântico encontrado com esse nome ou momento.
+                    </td>
+                </tr>
             </tbody>
         </table>
-    </div>
+    </section>
 
     <Cart />
 
 </template>
 
 <style scoped>
+
+.songs {
+    margin-bottom: 5.1em;
+    max-width: 1500px;
+}
+
+.user-input {
+    display: flex;
+    height: 3em;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 0.4em;
+}
+
+.magnifier-image {
+    cursor: pointer;
+}
+
+.songs-table {
+    width: 100%;
+    margin-top: 1.3em;
+}
+
+.songs-table th {
+    background-color: var(--default-bg-color);
+    color: white;
+    padding: 0.8em;
+}
+
+.songs-table th:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .order {
     color: white;
     font-weight: bold;
 }
 
-.text-input {
-    display: flex;
+.no-results {
+    text-align: center;
+    padding: 1.5em;
+    font-style: italic;
 }
 
-.magnifier {
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .songs-table th {
+        font-size: 0.9em;
+    }
 }
 
 </style>

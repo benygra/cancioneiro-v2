@@ -1,6 +1,4 @@
 <script setup>
-import { defineProps } from 'vue';
-
 import { useCart } from '@/composables/useCart'
 
 const { addToCart } = useCart();
@@ -9,6 +7,7 @@ defineProps({
   song: Object,
   id: String,
 });
+
 </script>
 
 <template>
@@ -19,3 +18,46 @@ defineProps({
     <td><button class="btn" @click="addToCart(id, song)">+</button></td>
   </tr>
 </template>
+
+<style scoped>
+
+.songs-table td {
+  padding: 0.7em;
+  border-bottom: 1px solid var(--default-bg-color);
+}
+
+.songs-table td a {
+  text-decoration: none;
+}
+
+.songs-table td a:hover {
+  text-decoration: underline;
+}
+
+.songs-table td:last-child {
+  text-align: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.3em 0.63em;
+  background-color: var(--default-bg-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.1em;
+}
+
+.btn:hover {
+  background-color: rgba(123, 98, 30, 0.8);
+}
+
+@media (max-width: 768px) {
+  .songs-table td {
+      padding: 0.9em;
+      font-size: 0.9em;
+  }
+}
+
+</style>
