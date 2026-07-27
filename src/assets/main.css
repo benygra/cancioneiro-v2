@@ -4,7 +4,6 @@
 :root {
   --main-text-color: #777;
   --default-bg-color: rgba(206, 154, 8, 255);
-  --cart-bg-color: rgba(206, 154, 8, 255);
 }
 
 * {

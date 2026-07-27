@@ -105,7 +105,7 @@ async function mergePDFs () {
   width: 4.8em;
   height: 4.8em;
   border-radius: 50%;
-  border-color: var(--cart-bg-color);
+  border-color: var(--default-bg-color);
   z-index: 1000;
 }
 
@@ -126,7 +126,7 @@ async function mergePDFs () {
   width: min(320px, calc(100vw - 40px));
   max-height: 45vh;
   overflow: auto;
-  background-color: var(--cart-bg-color);
+  background-color: var(--default-bg-color);
   border-radius: 5px;
   z-index: 1001;
 }
@@ -143,7 +143,7 @@ async function mergePDFs () {
 
 .drag-ghost {
   opacity: 0.4;
-  background: var(--cart-bg-color);
+  background: var(--default-bg-color);
   text-decoration: none;
 }
 
@@ -156,6 +156,7 @@ async function mergePDFs () {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, .3);
 }
 
 </style>

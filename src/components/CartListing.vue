@@ -29,6 +29,7 @@ defineEmits(['remove']);
 .drag-icon {
     width: 1.5em;
     height: 1.5em;
+    cursor: pointer;
 }
 
 .cart-item-title {
