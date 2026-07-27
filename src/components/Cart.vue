@@ -8,7 +8,7 @@ import CartListing from './CartListing.vue';
 
 import { useCart } from '@/composables/useCart';
 
-const { cart, removeFromCart } = useCart();
+const { cart, removeFromCart, clearAll } = useCart();
 
 const isOpen = ref(false); // reference to the cart panel being opened or not.
 
@@ -80,12 +80,21 @@ async function mergePDFs () {
 
   <div v-if="isOpen" class="cart-panel">
     <ul class="cart-list">
-      <li class="merge-item" @click="mergePDFs">
-        <img 
-          class="pdf-merge-icon" 
-          src="@/assets/img/pdfs-merge.png" 
-          alt="pdfs-merge"
-        >
+      <li class="merge-item">
+        <div class="cart-menu">
+          <img 
+            class="pdf-merge-icon" 
+            src="@/assets/img/pdfs-merge.png" 
+            alt="pdfs-merge"
+            @click="mergePDFs"
+          >
+          <img 
+            class="clean-icon" 
+            src="@/assets/img/mr-clean.png" 
+            alt="CLEAR ALL"
+            @click="clearAll"
+          >
+        </div>
       </li>
     </ul>
 
@@ -144,22 +153,6 @@ async function mergePDFs () {
   z-index: 1001;
 }
 
-.pdf-merge-icon {
-  width: 110px;
-  margin: 0.6em;
-}
-
-.pdf-merge-icon:hover {
-  transform: scale(1.05);
-  cursor: pointer;
-}
-
-.drag-ghost {
-  opacity: 0.4;
-  background: var(--default-bg-color);
-  text-decoration: none;
-}
-
 .cart-list {
   display: flex;
   flex-direction: column;
@@ -170,6 +163,33 @@ async function mergePDFs () {
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, .3);
+}
+
+.cart-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.pdf-merge-icon {
+  width: 110px;
+  margin: 0.6em;
+}
+
+.clean-icon {
+  width: 60px;
+  margin: 0.6em;
+}
+
+.pdf-merge-icon:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.clean-icon:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 </style>

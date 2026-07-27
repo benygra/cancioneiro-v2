@@ -43,5 +43,12 @@ export function useCart() {
     }
   }
 
-  return { cart, addToCart, removeFromCart };
+  /**
+   * Clears the cart entirely!
+   */
+  function clearAll() {
+    cart.value = [];
+  }
+
+  return { cart, addToCart, removeFromCart, clearAll };
 }
