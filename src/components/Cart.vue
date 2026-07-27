@@ -1,23 +1,32 @@
 <script setup>
-import { ref, computed } from 'vue'
+
+import { ref } from 'vue';
 import draggable from 'vuedraggable';
-import { PDFDocument } from 'pdf-lib'
+import { PDFDocument } from 'pdf-lib';
 
-import CartListing from './CartListing.vue'
-import { useCart } from '@/composables/useCart'
+import CartListing from './CartListing.vue';
 
-const { cart, removeFromCart } = useCart()
+import { useCart } from '@/composables/useCart';
 
-const isOpen = ref(false)
+const { cart, removeFromCart } = useCart();
 
+const isOpen = ref(false); // reference to the cart panel being opened or not.
+
+/**
+ * Toggles the cart panel by interacting with the proper button.
+ */
 const toggleCart = () => isOpen.value = !isOpen.value;
 
 async function downloadPdf(pdfBytes, filename) {
   const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+  const url = window.URL.createObjectURL(blob);
   const link = document.createElement('a');
-  link.href = window.URL.createObjectURL(blob);
+  link.href = url;
   link.download = filename;
+  document.body.appendChild(link);
   link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
 }
 
 async function fetchPDF(url) {
@@ -30,14 +39,29 @@ async function fetchPDF(url) {
 }
 
 async function mergePDFs () {
+  if (cart.value.length === 0) {
+    alert('Não selecionou nenhuma música para concatenar.');
+    return;
+  }
+
   const pdfDoc = await PDFDocument.create();
 
-  for (const {id, song} of cart.value) {
-    const url = '/data/pdf/' + id + ".pdf";
-    const pdfBytes = await fetchPDF(url);
-    const pdf = await PDFDocument.load(pdfBytes);
-    const copiedPages = await pdfDoc.copyPages(pdf, pdf.getPageIndices());
-    copiedPages.forEach(page => pdfDoc.addPage(page));
+  for (const { id } of cart.value) {
+    try {
+      const url = `/data/pdf/${id}.pdf`;
+      const pdfBytes = await fetchPDF(url);
+      const pdf = await PDFDocument.load(pdfBytes);
+      const copiedPages = await pdfDoc.copyPages(pdf, pdf.getPageIndices());
+      copiedPages.forEach(page => pdfDoc.addPage(page));
+
+    } catch (err) {
+      console.warn(`Skipping id "${id}": invalid PDF`, err.message);
+    }
+  }
+
+  if (pdfDoc.getPageCount() === 0) {
+    alert('Nenhuma música que selecionou tem letra disponível.');
+    return;
   }
   
   const mergedPdfBytes = await pdfDoc.save();
@@ -74,7 +98,7 @@ async function mergePDFs () {
       animation="150"
     >
       <template #item="{ element }">
-          <CartListing 
+          <CartListing
             :song="element.song"
             @remove="removeFromCart(element.id)"
           />

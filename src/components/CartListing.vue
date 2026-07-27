@@ -11,7 +11,7 @@ defineEmits(['remove']);
 <template>
     <li class="cart-item">
         <img class="drag-icon drag-handle" src="@/assets/img/drag.png" alt="drag">
-        <span class="cart-item-title">{{ song.title }}</span>
+        <span class="cart-item-title drag-handle">{{ song.title }}</span>
         <button class="cart-item-remove" @click="$emit('remove')">X</button>
     </li>
 </template>
