@@ -1,11 +1,22 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import draggable from 'vuedraggable';
 import { PDFDocument } from 'pdf-lib'
 
 import CartListing from './CartListing.vue'
 import { useCart } from '@/composables/useCart'
 
 const { cart, removeFromCart } = useCart()
+
+const cartItems = computed({
+  get() {
+    return Array.from(cart.value.entries()).map(([id, song]) => ({ id, song }))
+  },
+  set(newItems) {
+    // Rebuild the Map in the new order
+    cart.value = new Map(newItems.map(item => [item.id, item.song]))
+  }
+})
 
 const isOpen = ref(false)
 
@@ -63,13 +74,23 @@ async function mergePDFs () {
           alt="pdfs-merge"
         >
       </li>
-      <CartListing
-        v-for="[id, song] in cart"
-        :key="id"
-        :song="song"
-        @remove="removeFromCart(id)"
-      />
     </ul>
+
+    <draggable
+      v-model="cartItems"
+      item-key="id"
+      tag="ul"
+      class="cart-list"
+      handle=".drag-handle"
+      animation="150"
+    >
+      <template #item="{ element }">
+          <CartListing 
+            :song="element.song"
+            @remove="removeFromCart(element.id)"
+          />
+      </template>
+    </draggable>
   </div>
 
 </template>
@@ -118,6 +139,12 @@ async function mergePDFs () {
 .pdf-merge-icon:hover {
   transform: scale(1.05);
   cursor: pointer;
+}
+
+.drag-ghost {
+  opacity: 0.4;
+  background: var(--cart-bg-color);
+  text-decoration: none;
 }
 
 .cart-list {

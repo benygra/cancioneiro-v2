@@ -11,6 +11,7 @@ defineEmits(['remove']);
 
 <template>
     <li class="cart-item">
+        <img class="drag-icon drag-handle" src="@/assets/img/drag.png" alt="drag">
         <span class="cart-item-title">{{ song.title }}</span>
         <button class="cart-item-remove" @click="$emit('remove')">X</button>
     </li>
@@ -22,11 +23,19 @@ defineEmits(['remove']);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5em;
+    padding: 0.8em;
+}
+
+.drag-icon {
+    width: 1.5em;
+    height: 1.5em;
 }
 
 .cart-item-title {
+    flex: 1;
     color: white;
+    text-align: left;
+    margin-left: 0.4em;
 }
 
 .cart-item-remove {
