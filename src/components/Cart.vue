@@ -68,6 +68,12 @@ async function mergePDFs () {
   downloadPdf(mergedPdfBytes, 'merged.pdf');
 }
 
+function confirmClearAll() {
+  if (confirm('Tem a certeza que quer remover todas as músicas do carrinho?')) {
+    clearAll();
+  }
+}
+
 </script>
 
 <template>
@@ -92,7 +98,7 @@ async function mergePDFs () {
             class="clean-icon" 
             src="@/assets/img/mr-clean.png" 
             alt="CLEAR ALL"
-            @click="clearAll"
+            @click="confirmClearAll"
           >
         </div>
       </li>
