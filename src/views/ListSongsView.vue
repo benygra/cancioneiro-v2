@@ -11,13 +11,13 @@ const DESCENDING_ORDER = {order: 'desc', symbol: '▲'};
 
 const DEFAULT_ORDER = ASCENDING_ORDER;
 
-const songs = ref(songs_map);
+const songs = ref(songs_map); // the songs to be loaded into memory
 
 const sortColumn = ref(null); // the column the user is currently selecting to sort
 const sortOrder = ref(null); // the current sorting order of the column selection
-const searchQuery = ref('');
+const searchQuery = ref(''); // a reference to the user input for searching songs
 
-const filteredSongs = ref(Object.entries(songs.value));
+const filteredSongs = ref(Object.entries(songs.value)); // a reference to the filtered collection of songs by user input
 
 /**
  * Sorts the given column by either ascending or descending order
@@ -60,6 +60,11 @@ const getOrder = (column) => {
   return null;
 };
 
+/**
+ * Filter the songs based on the initial collection.
+ * It affects a reference that is persisted after a search is performed.
+ * The search is performed to the title/moment of the song.
+ */
 function filterSongs() {
   const entries = Object.entries(songs.value);
   const query = searchQuery.value.trim().toLowerCase();
@@ -76,25 +81,27 @@ function filterSongs() {
   });
 }
 
+/**
+ * Sorts the songs based on the current column being selected.
+ * It takes into account the current songs being filtered by the search input.
+ * The function correctly sorts the specified column, otherwise doesn't perform the sorting operation.
+ */
 const sortedSongs = computed(() => {
-  const entries = filteredSongs.value;
+  if (!sortColumn.value) return filteredSongs.value;
 
-  if (!sortColumn.value) return entries;
+  const direction = sortOrder.value.order === ASCENDING_ORDER.order ? 1 : -1;
 
-  const col = sortColumn.value;
-  const dir = sortOrder.value.order === 'asc' ? 1 : -1;
-
-  return [...entries].sort(([, a], [, b]) => {
-    const valA = a[col];
-    const valB = b[col];
+  return [...filteredSongs.value].sort(([, a], [, b]) => {
+    const valA = a[sortColumn.value];
+    const valB = b[sortColumn.value];
 
     if (valA == null) return 1;
     if (valB == null) return -1;
 
     if (typeof valA === 'string') {
-      return valA.localeCompare(valB) * dir;
+      return valA.localeCompare(valB) * direction;
     }
-    return (valA - valB) * dir;
+    return (valA - valB) * direction;
   });
 });
 
