@@ -1,8 +1,7 @@
 <script setup>
 
 defineProps({
-    song: Object,
-    id: String,
+    song: Object
 });
 
 defineEmits(['remove']);

@@ -1,17 +1,31 @@
 <script setup>
+
 import { computed, defineAsyncComponent } from 'vue';
-import songs_map from '@/songs_map.json';
 
 import NotFound from '@/components/NotFound.vue';
 
+import songs_map from '@/assets/songs_map.json';
+
+/**
+ * This view takes into account the id of a song.
+ * It is referring to a song in particular.
+ */
 const props = defineProps({
   id: String,
 });
 
+/**
+ * Fetches the song from the persisted json map from the given id.
+ */
 const song = computed(() => songs_map[props.id]);
 
 const lyricModules = import.meta.glob('@/assets/lyrics/*.vue');
 
+/**
+ * From the lyrics present in the project, fetches the component referring
+ * to the song with the provided id.
+ * If there is no such file, null is returned instead.
+ */
 const LyricsComponent = computed(() => {
   const path = `/src/assets/lyrics/${props.id}.vue`;
   return lyricModules[path]

@@ -4,7 +4,7 @@ import { ref, computed } from 'vue';
 import SongListing from '@/components/SongListing.vue';
 import Cart from '@/components/Cart.vue';
 
-import songs_map from '@/songs_map.json';
+import songs_map from '@/assets/songs_map.json';
 
 const ASCENDING_ORDER = {order: 'asc', symbol: '▼'};
 const DESCENDING_ORDER = {order: 'desc', symbol: '▲'};
