@@ -1,29 +1,64 @@
 <script setup>
+import { ref, computed } from 'vue';
+
 import SongListing from '@/components/SongListing.vue';
 import Cart from '@/components/Cart.vue';
 
 import songs_map from '@/songs_map.json';
-import { ref } from 'vue';
-import { computed } from 'vue';
+
+const ASCENDING_ORDER = {order: 'asc', symbol: '▼'};
+const DESCENDING_ORDER = {order: 'desc', symbol: '▲'};
+
+const DEFAULT_ORDER = ASCENDING_ORDER;
 
 const songs = ref(songs_map);
 
-const sortColumn = ref(null);
-const sortOrder = ref('asc');
+const sortColumn = ref(null); // the column the user is currently selecting to sort
+const sortOrder = ref(null); // the current sorting order of the column selection
 const searchQuery = ref('');
 
 const filteredSongs = ref(Object.entries(songs.value));
 
+/**
+ * Sorts the given column by either ascending or descending order
+ * (alternating). After three 'clicks', it goes back to the default order (the sites').
+ * If the user selects the column for the first time, it sorts by ascending order.
+ * Otherwise, it flips the order (ascending/descending) depending on the state of the user interaction.
+ * @param column the column the user is selecting to be sorted.
+ */
 function sortBy(column) {
   if (sortColumn.value === column) {
     // clicking the same column again flips the order....
-    sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
+    if (!sortOrder.value) {
+        sortOrder.value = ASCENDING_ORDER;
+    }
+
+    else if (sortOrder.value.order === ASCENDING_ORDER.order) {
+        sortOrder.value = DESCENDING_ORDER;
+    }
+
+    else if (sortOrder.value.order === DESCENDING_ORDER.order) {
+        sortOrder.value = null;
+        sortColumn.value = null;
+    }
 
   } else {
+    sortOrder.value = DEFAULT_ORDER;
     sortColumn.value = column;
-    sortOrder.value = 'asc';
   }
 }
+
+/**
+ * Gets the symbol referring the given column.
+ * If the user is not selecting it, there is no symbol associated.
+ */
+const getOrder = (column) => {
+  if (sortColumn.value === column) {
+    return sortOrder.value?.symbol;
+  }
+
+  return null;
+};
 
 function filterSongs() {
   const entries = Object.entries(songs.value);
@@ -47,7 +82,7 @@ const sortedSongs = computed(() => {
   if (!sortColumn.value) return entries;
 
   const col = sortColumn.value;
-  const dir = sortOrder.value === 'asc' ? 1 : -1;
+  const dir = sortOrder.value.order === 'asc' ? 1 : -1;
 
   return [...entries].sort(([, a], [, b]) => {
     const valA = a[col];
@@ -62,19 +97,6 @@ const sortedSongs = computed(() => {
     return (valA - valB) * dir;
   });
 });
-
-const toggle = (sortColumn, desiredColumn, sortOrder) => {
-    if (sortColumn === desiredColumn) {
-        if (sortOrder === 'asc') {
-            return '▼';
-        }
-
-        return '▲';
-    }
-
-    return '▼';
-}
-
 
 </script>
 
@@ -105,15 +127,15 @@ const toggle = (sortColumn, desiredColumn, sortOrder) => {
                 <tr>
                     <th @click="sortBy('title')">
                         Título
-                        <span class="order">{{ toggle(sortColumn, 'title', sortOrder) }}</span>
+                        <span class="order">{{ getOrder('title') }}</span>
                     </th>
                     <th @click="sortBy('moment')">
                         Momento
-                        <span class="order">{{ toggle(sortColumn, 'moment', sortOrder) }}</span>
+                        <span class="order">{{ getOrder('moment') }}</span>
                     </th>
                     <th @click="sortBy('tone')" colspan="2">
                         Tom
-                        <span class="order">{{ toggle(sortColumn, 'tone', sortOrder) }}</span>
+                        <span class="order">{{ getOrder('tone') }}</span>
                     </th>
                 </tr>
             </thead>
