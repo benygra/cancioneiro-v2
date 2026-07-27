@@ -111,12 +111,9 @@ const toggle = (sortColumn, desiredColumn, sortOrder) => {
                         Momento
                         <span class="order">{{ toggle(sortColumn, 'moment', sortOrder) }}</span>
                     </th>
-                    <th @click="sortBy('tone')">
+                    <th @click="sortBy('tone')" colspan="2">
                         Tom
                         <span class="order">{{ toggle(sortColumn, 'tone', sortOrder) }}</span>
-                    </th>
-                    <th>
-                        Adicionada
                     </th>
                 </tr>
             </thead>
