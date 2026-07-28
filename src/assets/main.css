@@ -9,7 +9,6 @@
 * {
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
-  color: var(--main-text-color);
   margin: 0;
   padding: 0;
 }
@@ -27,6 +26,10 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 0.8em 1.5em;
+}
+
+.content-section * {
+  color: var(--main-text-color);
 }
 
 .section-header {

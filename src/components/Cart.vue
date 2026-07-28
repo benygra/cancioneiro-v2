@@ -114,8 +114,8 @@ function confirmClearAll() {
     >
       <template #item="{ element }">
           <CartListing
+            :id="element.id"
             :song="element.song"
-            @remove="removeFromCart(element.id)"
           />
       </template>
     </draggable>

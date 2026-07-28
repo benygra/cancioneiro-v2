@@ -1,10 +1,20 @@
 <script setup>
 
-defineProps({
-    song: Object
+import { useCart } from '@/composables/useCart';
+import { useToast } from 'vue-toastification';
+
+const { removeFromCart } = useCart();
+const toast = useToast();
+
+const props = defineProps({
+    id: String,
+    song: Object,
 });
 
-defineEmits(['remove']);
+function handleRemove() {
+  removeFromCart(props.id);
+  toast(`Removendo ${props.song.title} do carrinho.`);
+}
 
 </script>
 
@@ -12,7 +22,7 @@ defineEmits(['remove']);
     <li class="cart-item">
         <img class="drag-icon drag-handle" src="@/assets/img/drag.png" alt="drag">
         <span class="cart-item-title drag-handle">{{ song.title }}</span>
-        <button class="cart-item-remove" @click="$emit('remove')">X</button>
+        <button class="cart-item-remove" @click="handleRemove">X</button>
     </li>
 </template>
 
@@ -41,6 +51,7 @@ defineEmits(['remove']);
 .cart-item-remove {
     padding: 0.2em;
     font-weight: bold;
+    color: wheat;
     background-color: red;
     border-radius: 2px;
     border-color: darkred;

@@ -1,12 +1,19 @@
 <script setup>
-import { useCart } from '@/composables/useCart'
+import { useCart } from '@/composables/useCart';
+import { useToast } from 'vue-toastification';
 
 const { addToCart } = useCart();
+const toast = useToast();
 
-defineProps({
+const props = defineProps({
   song: Object,
   id: String,
 });
+
+function handleAdd() {
+  addToCart(props.id);
+  toast.success(`Adicionando ${props.song.title} ao carrinho!`);
+}
 
 </script>
 
@@ -15,7 +22,7 @@ defineProps({
     <td><a target="_blank" :href="`/songs/${id}`">{{ song.title }}</a></td>
     <td>{{ song.moment }}</td>
     <td>{{ song.tone }}</td>
-    <td><button class="btn" @click="addToCart(id)">+</button></td>
+    <td><button class="btn" @click="handleAdd">+</button></td>
   </tr>
 </template>
 
