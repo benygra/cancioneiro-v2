@@ -1,6 +1,6 @@
 <script setup>
 
-import { computed, defineAsyncComponent } from 'vue';
+import { computed, defineAsyncComponent, watchEffect } from 'vue';
 
 import NotFound from '@/components/NotFound.vue';
 
@@ -32,6 +32,15 @@ const LyricsComponent = computed(() => {
     ? defineAsyncComponent(lyricModules[path])
     : null;
 });
+
+/**
+ * Changes the browser tab title to the song's one.
+ * If the song is not available, shows a default text.
+ */
+watchEffect(() => {
+  document.title = song.value ? song.value.title : 'Não disponível';
+});
+
 </script>
 
 <template>

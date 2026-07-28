@@ -38,6 +38,10 @@ async function fetchPDF(url) {
   return new Uint8Array(arrayBuffer);
 }
 
+/**
+ * Merge the pdfs selected by the user in the cart.
+ * For some reason, if any of the songs is not available via pdf, it skips it.
+ */
 async function mergePDFs () {
   if (cart.value.length === 0) {
     alert('Não selecionou nenhuma música para concatenar.');
