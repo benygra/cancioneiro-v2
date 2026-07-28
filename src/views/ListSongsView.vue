@@ -160,6 +160,9 @@ const sortedSongs = computed(() => {
                 </tr>
             </tbody>
         </table>
+        <div class="counter-wrapper" v-if="sortedSongs.length > 0">
+            <p class="counter">Músicas <span class="counter-number">{{ sortedSongs.length }}</span></p>
+        </div>
     </section>
 
     <Cart />
@@ -215,6 +218,28 @@ const sortedSongs = computed(() => {
     text-align: center;
     padding: 1.5em;
     font-style: italic;
+}
+
+.counter-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--default-bg-color);
+    width: fit-content;
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-top: 1em;
+}
+
+.counter {
+    padding: 0.5em;
+    text-align: center;
+    color: white;
+}
+
+.counter-number {
+    font-weight: bold;
+    color: white;
 }
 
 /* Mobile responsiveness */
