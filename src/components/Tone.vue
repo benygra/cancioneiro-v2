@@ -11,7 +11,7 @@ const props = defineProps({
 
 const emit = defineEmits(['tone-change']);
 
-const { getScale, transposeChord, transposeSpan } = useToneTranslator();
+const { getScale, indexOfTone, transposeChord, transposeSpan } = useToneTranslator();
 
 const useFlat = ref(false);
 const semitones = ref(0);
@@ -43,10 +43,19 @@ function applyTranspose() {
   });
 }
 
+function selectTone(tone) {
+  const targetIdx = indexOfTone(tone);
+  const baseIdx = indexOfTone(props.song.tone);
+  if (targetIdx === undefined || baseIdx === undefined) return;
+
+  captureOriginals();
+  semitones.value = targetIdx - baseIdx;
+  applyTranspose();
+}
+
 function step(delta) {
   captureOriginals();
   semitones.value += delta;
-  console.log(semitones.value);
   applyTranspose();
 }
 
@@ -69,7 +78,7 @@ watch(() => props.song, () => {
             :class="{ 'item-selected': currentTone === tone }"
             v-for="tone in scale"
             :key="tone"
-            @click="console.log(tone)"
+            @click="selectTone(tone)"
         >
             {{ tone }}
         </li>

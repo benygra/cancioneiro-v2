@@ -47,13 +47,6 @@ export function useToneTranslator() {
 
     const indexOfTone = (tone) => INDEXES.get(tone);
 
-    const getToneFromIndex = (idx) => {
-        const chromaticScale = getScale(useFlat);
-        if (idx < 0 || idx >= chromaticScale.length) return null;
-
-        return chromaticScale[idx];
-    };
-
     function transposeChord(chord, semitones, useFlat=false) {
         const chromaticScale = getScale(useFlat);
 
@@ -72,6 +65,6 @@ export function useToneTranslator() {
         });
     }
 
-    return { getScale, transposeChord, transposeSpan } ;
+    return { getScale, indexOfTone, transposeChord, transposeSpan } ;
 }
 
