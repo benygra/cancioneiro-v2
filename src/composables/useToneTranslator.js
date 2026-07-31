@@ -1,76 +1,58 @@
-const TRANSPOSE = {
-    'Dó':   0x00,
-    'Dó#':  0x10,
-    'Réb':  0x10,
-    'Ré':   0x20,
-    'Ré#':  0x30,
-    'Mib':  0x30,
-    'Mi':   0x40,
-    'Fá':   0x50,
-    'Fá#':  0x60,
-    'Solb': 0x60,
-    'Sol':  0x70,
-    'Sol#': 0x80,
-    'Láb':  0x80,
-    'Lá':   0x90,
-    'Lá#':  0xA0,
-    'Sib':  0xA0,
-    'Si':   0xB0,
+const SHARP_CHROMATIC = [
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B'
+];
 
-    'C':    0x00,
-    'C#':   0x10,
-    'Db':   0x10,
-    'D':    0x20,
-    'D#':   0x30,
-    'Eb':   0x30,
-    'E':    0x40,
-    'F':    0x50,
-    'F#':   0x60,
-    'Gb':   0x60,
-    'G':    0x70,
-    'G#':   0x80,
-    'Ab':   0x80,
-    'A':    0x90,
-    'A#':   0xA0,
-    'Bb':   0xA0,
-    'B':    0xB0
+const FLAT_CHROMATIC = [
+  'C',
+  'Db',
+  'D',
+  'Eb',
+  'E',
+  'F',
+  'Gb',
+  'G',
+  'Ab',
+  'A',
+  'Bb',
+  'B'
+];
+
+const INDEXES = new Map();
+
+function loadIndexes(scale) {
+    for (let i = 0; i < scale.length; i++) {
+        INDEXES.set(scale[i], i);
+    }
 }
 
-const TRANSPOSE_JOINED = Object.keys(TRANSPOSE).join('|');
-
-// all chords are considered, only minors contribute to the last part of the code
-const CHORD_RE = new RegExp(`^(${TRANSPOSE_JOINED})(m(?!aj)|-)?`);
+loadIndexes(SHARP_CHROMATIC);
+loadIndexes(FLAT_CHROMATIC);
 
 export function useToneTranslator() {
 
-    function toCode(chord) {
+    const getScale = (useFlat=false) => useFlat ? FLAT_CHROMATIC : SHARP_CHROMATIC;
 
-        function doOne(splitted) {
-            const match = splitted.match(CHORD_RE);
-            if (!match) return null; // we don't know that chord...
+    function transpose(chord, semitones, useFlat=false) {
 
-            let code = TRANSPOSE[match[1]];
+        const chromaticScale = getScale(useFlat);
 
-            if (match[2]) {
-                code |= 0x01; // minor
-            }
+        const idx = INDEXES.get(chord);
+        if (!idx) return null;
 
-            return code;
-        }
-
-        const barSplit = chord.split('/'); //because the chord might get like Am/A (on the chorus it went from minor to major)
-        var code = 0x0;
-        for (let i = 0; i < barSplit.length; i++) {
-            code |= doOne(barSplit[i]);
-
-            if (i < barSplit.length-1) {
-                code <<= 8;
-            }
-        }
-
-        return code;
+        return chromaticScale[(idx + semitones) % chromaticScale.length];   
     }
 
-    return { toCode } ;
+    return { getScale, transpose } ;
 }
 

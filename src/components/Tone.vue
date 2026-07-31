@@ -1,10 +1,16 @@
 <script setup>
 
+import { ref, computed } from 'vue';
+
 import { useToneTranslator } from '@/composables/useToneTranslator';
 
-const { toCode } = useToneTranslator();
+const { getScale, transpose } = useToneTranslator();
 
-const tones = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+const useFlat = ref(false);
+
+const toggleChromatic = () => useFlat.value = !useFlat.value;
+
+const buttonLabel = computed(() => useFlat.value ? '♭' : '♯');
 
 defineProps({
     song: Object,
@@ -14,8 +20,12 @@ defineProps({
 
 <template>
     <ul class="tones">
-        <li class="item" v-for="tone in tones">{{ toCode(tone).toString(16) }}</li>
+        <li class="item" v-for="tone in getScale(useFlat)" @click="console.log(tone)">{{ tone }}</li>
     </ul>
+
+    <button class="chromatic-btn" @click="toggleChromatic">{{ buttonLabel }}</button>
+    <button class="chromatic-btn" @click="">+</button>
+    <button class="chromatic-btn" @click="">-</button>
 </template>
 
 <style scoped>
@@ -28,6 +38,15 @@ defineProps({
 .item {
     padding: 0 1em;
     cursor: pointer;
+}
+
+.item:hover {
+    color: red;
+}
+
+.chromatic-btn {
+    padding: 0.1em;
+    font-size: 1.4em;
 }
 
 </style>
