@@ -37,6 +37,10 @@ const LyricsComponent = computed(() => {
 
 const lyricsContainer = ref(null);
 
+const displayTone = ref(null);
+
+const onToneChange = (tone) => displayTone.value = tone;
+
 /**
  * Changes the browser tab title to the song's one.
  * If the song is not available, shows a default text.
@@ -54,7 +58,7 @@ watchEffect(() => {
       <div class="lyrics-meta">
         <div class="lyrics-meta-item">
           <strong class="lyrics-meta-title">Tom</strong>
-          <span class="chord-style">{{ song.tone }}</span>
+          <span class="chord-style">{{ displayTone ?? song.tone }}</span>
         </div>
           <div class="lyrics-meta-item">
             <strong class="lyrics-meta-title">Momento</strong>
@@ -69,7 +73,7 @@ watchEffect(() => {
         <div class="menu">
           <div class="menu-item">
             <h3 class="section-header-small">Tonalidade</h3>
-            <Tone :song="song" :lyrics="lyricsContainer"/>
+            <Tone :song="song" :lyrics="lyricsContainer" @tone-change="onToneChange"/>
           </div>
         </div>
       </div>

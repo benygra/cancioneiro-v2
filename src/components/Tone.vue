@@ -9,6 +9,8 @@ const props = defineProps({
     lyrics: Object,
 });
 
+const emit = defineEmits(['tone-change']);
+
 const { getScale, transposeChord, transposeSpan } = useToneTranslator();
 
 const useFlat = ref(false);
@@ -19,6 +21,10 @@ const buttonLabel = computed(() => useFlat.value ? '♭' : '♯');
 const scale = computed(() => getScale(useFlat.value));
 
 const currentTone = computed(() => transposeChord(props.song.tone, semitones.value, useFlat.value));
+
+watch(currentTone, (newTone) => {
+  emit('tone-change', newTone);
+});
 
 function captureOriginals() {
   if (!props.lyrics) return;
