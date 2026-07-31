@@ -20,7 +20,15 @@ defineProps({
 
 <template>
     <ul class="tones">
-        <li class="item" v-for="tone in getScale(useFlat)" @click="console.log(tone)">{{ tone }}</li>
+        <li
+            class="item"
+            :class="{ 'item-selected': song.tone === tone }"
+            v-for="tone in getScale(useFlat)"
+            :key="tone"
+            @click="console.log(tone)"
+        >
+            {{ tone }}
+        </li>
     </ul>
 
     <button class="chromatic-btn" @click="toggleChromatic">{{ buttonLabel }}</button>
@@ -40,7 +48,8 @@ defineProps({
     cursor: pointer;
 }
 
-.item:hover {
+.item:hover,
+.item-selected {
     color: red;
 }
 
