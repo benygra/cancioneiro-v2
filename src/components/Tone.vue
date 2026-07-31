@@ -1,19 +1,57 @@
 <script setup>
 
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 import { useToneTranslator } from '@/composables/useToneTranslator';
 
-const { getScale, transpose } = useToneTranslator();
+const props = defineProps({
+    song: Object,
+    lyrics: Object,
+});
+
+const { getScale, transposeChord, transposeSpan } = useToneTranslator();
 
 const useFlat = ref(false);
-
-const toggleChromatic = () => useFlat.value = !useFlat.value;
+const semitones = ref(0);
+let originals = new WeakMap();
 
 const buttonLabel = computed(() => useFlat.value ? '♭' : '♯');
+const scale = computed(() => getScale(useFlat.value));
 
-defineProps({
-    song: Object,
+const currentTone = computed(() => transposeChord(props.song.tone, semitones.value, useFlat.value));
+
+function captureOriginals() {
+  if (!props.lyrics) return;
+
+  props.lyrics.querySelectorAll('.chord').forEach(span => {
+    if (!originals.has(span)) originals.set(span, span.textContent);
+  });
+}
+
+function applyTranspose() {
+  if (!props.lyrics) return;
+
+  props.lyrics.querySelectorAll('.chord').forEach(span => {
+    const original = originals.get(span) ?? span.textContent;
+    span.textContent = transposeSpan(original, semitones.value, useFlat.value);
+  });
+}
+
+function step(delta) {
+  captureOriginals();
+  semitones.value += delta;
+  console.log(semitones.value);
+  applyTranspose();
+}
+
+function toggleChromatic() {
+  useFlat.value = !useFlat.value;
+  applyTranspose();
+}
+
+watch(() => props.song, () => {
+  originals = new WeakMap();
+  semitones.value = 0;
 });
 
 </script>
@@ -22,8 +60,8 @@ defineProps({
     <ul class="tones">
         <li
             class="item"
-            :class="{ 'item-selected': song.tone === tone }"
-            v-for="tone in getScale(useFlat)"
+            :class="{ 'item-selected': currentTone === tone }"
+            v-for="tone in scale"
             :key="tone"
             @click="console.log(tone)"
         >
@@ -32,8 +70,8 @@ defineProps({
     </ul>
 
     <button class="chromatic-btn" @click="toggleChromatic">{{ buttonLabel }}</button>
-    <button class="chromatic-btn" @click="">+</button>
-    <button class="chromatic-btn" @click="">-</button>
+    <button class="chromatic-btn" @click="step(1)">+</button>
+    <button class="chromatic-btn" @click="step(-1)">-</button>
 </template>
 
 <style scoped>

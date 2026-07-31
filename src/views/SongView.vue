@@ -1,6 +1,6 @@
 <script setup>
 
-import { computed, defineAsyncComponent, watchEffect } from 'vue';
+import { ref, computed, defineAsyncComponent, watchEffect } from 'vue';
 
 import Tone from '@/components/Tone.vue';
 import NotFound from '@/components/NotFound.vue';
@@ -21,18 +21,21 @@ const props = defineProps({
 const song = computed(() => songs_map[props.id]);
 
 const lyricModules = import.meta.glob('@/assets/lyrics/*.vue');
+const componentCache = new Map();
 
-/**
- * From the lyrics present in the project, fetches the component referring
- * to the song with the provided id.
- * If there is no such file, null is returned instead.
- */
 const LyricsComponent = computed(() => {
   const path = `/src/assets/lyrics/${props.id}.vue`;
-  return lyricModules[path]
-    ? defineAsyncComponent(lyricModules[path])
-    : null;
+
+  if (!lyricModules[path]) return null;
+
+  if (!componentCache.has(path)) {
+    componentCache.set(path, defineAsyncComponent(lyricModules[path]));
+  }
+
+  return componentCache.get(path);
 });
+
+const lyricsContainer = ref(null);
 
 /**
  * Changes the browser tab title to the song's one.
@@ -59,17 +62,19 @@ watchEffect(() => {
           </div>
       </div>
 
-      <div class="wrapper">
-        <div class="lyrics">
-          <component v-if="LyricsComponent" :is="LyricsComponent" />
-          <NotFound v-else :title="song.title" />
+      <div class="wrapper" v-if="LyricsComponent">
+        <div class="lyrics" ref="lyricsContainer">
+          <component  :is="LyricsComponent" />
         </div>
         <div class="menu">
           <div class="menu-item">
             <h3 class="section-header-small">Tonalidade</h3>
-            <Tone :song="song"/>
+            <Tone :song="song" :lyrics="lyricsContainer"/>
           </div>
         </div>
+      </div>
+      <div v-else>
+        <NotFound :title="song.title" />
       </div>
     </section>
   </div>
