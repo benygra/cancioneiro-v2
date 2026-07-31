@@ -36,30 +36,23 @@ const TRANSPOSE = {
     'B':    0xB0
 }
 
-const ADDITIONAL = {
-    'm': 0x01,
-    '-': 0x01
-}
+const TRANSPOSE_JOINED = Object.keys(TRANSPOSE).join('|');
+
+// all chords are considered, only minors contribute to the last part of the code
+const CHORD_RE = new RegExp(`^(${TRANSPOSE_JOINED})(m(?!aj)|-)?`);
 
 export function useToneTranslator() {
 
     function toCode(chord) {
 
         function doOne(splitted) {
-            for (const key of Object.keys(ADDITIONAL)) {
-                var additionalSplit = splitted.split(key);
-                if (additionalSplit.length > 1) {
-                    break;
-                }
-            }
+            const match = splitted.match(CHORD_RE);
+            if (!match) return null; // we don't know that chord...
 
-            if (!Object.hasOwn(TRANSPOSE, additionalSplit[0])) {
-                return null; // we don't know that chord...
-            }
+            let code = TRANSPOSE[match[1]];
 
-            var code = TRANSPOSE[additionalSplit[0]];
-            if (additionalSplit.length > 1) {
-                code |= 0x01;
+            if (match[2]) {
+                code |= 0x01; // minor
             }
 
             return code;
