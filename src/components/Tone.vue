@@ -40,6 +40,8 @@ function captureOriginals() {
 function applyTranspose() {
   if (!props.lyrics) return;
 
+  captureOriginals();
+
   props.lyrics.querySelectorAll('.chord').forEach(span => {
     const original = originals.get(span) ?? span.textContent;
     span.textContent = transposeSpan(original, semitones.value - capoInput.value, useFlat.value);
@@ -51,16 +53,17 @@ function selectTone(tone) {
   const baseIdx = indexOfTone(props.song.tone);
   if (targetIdx === undefined || baseIdx === undefined) return;
 
-  captureOriginals();
   semitones.value = targetIdx - baseIdx;
   useFlat.value = getDefaultUseFlat(tone);
+  capoInput.value = 0; emit('capo-change', capoInput.value);
   applyTranspose();
+
 }
 
 function step(delta) {
-  captureOriginals();
   semitones.value += delta;
   useFlat.value = getDefaultUseFlat(getCurrentTone());
+  capoInput.value = 0; emit('capo-change', capoInput.value);
   applyTranspose();
 }
 
@@ -77,6 +80,8 @@ function capoChange() {
 watch(() => props.song, () => {
   originals = new WeakMap();
   semitones.value = 0;
+  capoInput.value = props.song.capo ?? 0;
+  useFlat.value = false;
 });
 
 </script>
