@@ -3,7 +3,14 @@
 
 :root {
   --main-text-color: #777;
-  --default-bg-color: rgba(206, 154, 8, 255);
+  --default-bg-color: rgba(206, 154, 8);
+
+  --nav-line-color: rgba(255, 255, 255, .3);
+  --nav-text-color: white;
+  --nav-top-color: #cb9808;
+  --nav-bottom-color: #826105;
+
+  --tone-btn-hover-bg-color: rgba(206, 153, 8, 0.733);
 }
 
 * {
@@ -45,4 +52,5 @@
   font-family: "Anton", Helvetica, sans-serif;
   font-weight: normal;
   font-size: 1.4em;
+  text-align: center;
 }

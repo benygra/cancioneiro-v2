@@ -80,13 +80,15 @@ watch(() => props.song, () => {
             :key="tone"
             @click="selectTone(tone)"
         >
-            {{ tone }}
+            <span class="item-text">{{ tone }}</span>
         </li>
     </ul>
 
-    <button class="chromatic-btn" @click="toggleChromatic">{{ buttonLabel }}</button>
-    <button class="chromatic-btn" @click="step(1)">+</button>
-    <button class="chromatic-btn" @click="step(-1)">-</button>
+    <div class="buttons">
+      <button class="chromatic-btn" @click="step(-1)">-</button>
+      <button class="chromatic-btn" @click="toggleChromatic">{{ buttonLabel }}</button>
+      <button class="chromatic-btn" @click="step(1)">+</button>
+    </div>
 </template>
 
 <style scoped>
@@ -94,21 +96,55 @@ watch(() => props.song, () => {
 .tones {
   display: flex;
   list-style-type: none;
+  flex-wrap: wrap;
+  gap: 0.7em;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .item {
-    padding: 0 1em;
-    cursor: pointer;
+  color: var(--chord-text-color);
+  width: 3em;
+  height: 3em;
+  cursor: pointer;
+  border: 2px solid var(--nav-bottom-color);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-text {
+  font-weight: bold;
+  color: inherit;
 }
 
 .item:hover,
 .item-selected {
-    color: red;
+  background-color: var(--default-bg-color);
+  color: white;
+}
+
+.buttons {
+  display: flex;
+  gap: 0.1em;
+  justify-content: center;
+  margin: 0.9em 0;
 }
 
 .chromatic-btn {
-    padding: 0.1em;
-    font-size: 1.4em;
+  width: 25%;
+  height: 25%;
+  border: 2px solid var(--nav-bottom-color);
+  background-color: var(--default-bg-color);
+  border-radius: 5px;
+  font-size: 1.5em;
+  color: var(--nav-text-color);
+  cursor: pointer;
+}
+
+.chromatic-btn:hover {
+  background-color: var(--tone-btn-hover-bg-color);
 }
 
 </style>

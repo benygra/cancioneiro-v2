@@ -10,11 +10,6 @@
 <style scoped>
 
 .nav {
-  --nav-line-color: rgba(255, 255, 255, .3);
-  --nav-text-color: white;
-  --nav-top-color: #cb9808;
-  --nav-bottom-color: #826105;
-
   display: flex;
   justify-content: center;
   text-align: center;
@@ -35,7 +30,7 @@
   text-decoration: none;
 }
 
-.navbar-item a:hover {
+.navbar-item *:hover {
   background-color: var(--nav-line-color);
 }
 
