@@ -21,7 +21,9 @@ let originals = new WeakMap();
 const buttonLabel = computed(() => useFlat.value ? '♭' : '♯');
 const scale = computed(() => getScale(props.song.tone, useFlat.value));
 
-const currentTone = computed(() => transposeChord(props.song.tone, semitones.value, useFlat.value));
+const getCurrentTone = () => transposeChord(props.song.tone, semitones.value, useFlat.value);
+
+const currentTone = computed(() => getCurrentTone());
 
 watch(currentTone, (newTone) => {
   emit('tone-change', newTone);
@@ -40,7 +42,7 @@ function applyTranspose() {
 
   props.lyrics.querySelectorAll('.chord').forEach(span => {
     const original = originals.get(span) ?? span.textContent;
-    span.textContent = transposeSpan(original, semitones.value, useFlat.value);
+    span.textContent = transposeSpan(original, semitones.value - capoInput.value, useFlat.value);
   });
 }
 
@@ -58,12 +60,17 @@ function selectTone(tone) {
 function step(delta) {
   captureOriginals();
   semitones.value += delta;
-  useFlat.value = getDefaultUseFlat(transposeChord(props.song.tone, semitones.value));
+  useFlat.value = getDefaultUseFlat(getCurrentTone());
   applyTranspose();
 }
 
 function toggleChromatic() {
   useFlat.value = !useFlat.value;
+  applyTranspose();
+}
+
+function capoChange() {
+  emit('capo-change', capoInput.value);
   applyTranspose();
 }
 
@@ -100,7 +107,7 @@ watch(() => props.song, () => {
         type="number"
         name="capo-number"
         v-model="capoInput"
-        @change="$emit('capo-change', capoInput)"
+        @change="capoChange"
       >
     </div>
 </template>
