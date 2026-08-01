@@ -119,9 +119,13 @@ watch(() => props.song, () => {
 .item-text {
   font-weight: bold;
   color: inherit;
+  text-align: center;
 }
 
-.item:hover,
+.item:hover {
+  background-color: var(--tone-btn-hover-bg-color);
+}
+
 .item-selected {
   background-color: var(--default-bg-color);
   color: white;
