@@ -10,12 +10,12 @@ const props = defineProps({
     lyricsReady: Boolean,
 });
 
-const emit = defineEmits(['tone-change', 'capo-change']);
+const emit = defineEmits(['real-tone-change', 'capo-tone-change', 'capo-change']);
 
 const { getScale, getDefaultUseFlat, indexOfTone, transposeChord, transposeSpan } = useToneTranslator();
 
 const useFlat = ref(false);
-const semitones = ref(0);
+const semitones = ref(props.song.capo ?? 0);
 const capoInput = ref(props.song.capo ?? 0);
 let originals = new WeakMap();
 
@@ -25,17 +25,22 @@ const scale = computed(() => getScale(props.song.tone, useFlat.value));
 const getRealTone = () => transposeChord(props.song.tone, semitones.value, useFlat.value);
 const getCapoTone = () => transposeChord(props.song.tone, semitones.value - capoInput.value, useFlat.value);
 
-const currentTone = computed(() => getRealTone());
+const currentRealTone = computed(() => getRealTone());
+const currentCapoTone = computed(() => getCapoTone());
 
-watch(currentTone, (newTone) => {
-  emit('tone-change', newTone);
+watch(currentRealTone, (newTone) => {
+  emit('real-tone-change', newTone);
+});
+
+watch(currentCapoTone, (newTone) => {
+  emit('capo-tone-change', newTone);
 });
 
 function captureOriginals() {
   if (!props.lyrics) return;
 
   props.lyrics.querySelectorAll('.chord').forEach(span => {
-    if (!originals.has(span)) originals.set(span, transposeSpan(span.textContent, capoInput.value, useFlat.value));
+    if (!originals.has(span)) originals.set(span, span.textContent);
   });
 }
 
@@ -82,7 +87,7 @@ watch(
     if (!ready) return; // wait until the real DOM is actually there
 
     originals = new WeakMap();
-    semitones.value = 0;
+    semitones.value = props.song.capo ?? 0;
     capoInput.value = props.song.capo ?? 0;
     useFlat.value = getDefaultUseFlat(getCapoTone());
 
@@ -97,7 +102,7 @@ watch(
     <ul class="tones">
         <li
             class="item"
-            :class="{ 'item-selected': currentTone === tone }"
+            :class="{ 'item-selected': currentRealTone === tone }"
             v-for="tone in scale"
             :key="tone"
             @click="selectTone(tone)"

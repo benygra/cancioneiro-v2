@@ -49,9 +49,11 @@ watch(() => props.id, () => {
   lyricsReady.value = false;
 });
 
-const displayTone = ref(null);
+const displayRealTone = ref(null);
+const displayCapoTone = ref(null);
 
-const onToneChange = (tone) => displayTone.value = tone;
+const onRealToneChange = (tone) => displayRealTone.value = tone;
+const onCapoToneChange = (tone) => displayCapoTone.value = tone;
 
 const localCapo = ref(null);
 const displayCapo = computed(() => localCapo.value ?? song.value?.capo);
@@ -81,7 +83,10 @@ onUnmounted(() => {
       <div class="lyrics-meta">
         <div class="lyrics-meta-item">
           <strong class="lyrics-meta-title">Tom</strong>
-          <span class="chord-style">{{ displayTone ?? song.tone }}</span>
+          <span class="chord-style">{{ displayRealTone ?? song.tone }}</span>
+        </div>
+        <div class="lyrics-meta-item" v-if="displayCapo">
+          <span class="chord-style">({{ displayCapoTone ?? song.tone }})</span>
         </div>
         <div class="lyrics-meta-item" v-if="displayCapo">
           <strong class="lyrics-meta-title">Capo</strong>
@@ -107,7 +112,8 @@ onUnmounted(() => {
               :song="song"
               :lyrics="lyricsContainer"
               :lyrics-ready="lyricsReady"
-              @tone-change="onToneChange"
+              @real-tone-change="onRealToneChange"
+              @capo-tone-change="onCapoToneChange"
               @capo-change="onCapoChange"
             />
           </div>
@@ -131,23 +137,7 @@ onUnmounted(() => {
   background-color: white;
   padding: 0.7em 0;
   display: flex;
-  align-items: center;
-}
-
-.lyrics-meta-item:first-child {
-  flex: 1;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.lyrics-meta-item:last-child {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.lyrics-meta-item:not(:first-child):not(:last-child) {
-  flex: 0 0 auto;
+  justify-content: space-between;
 }
 
 .lyrics-meta-title {
@@ -178,15 +168,10 @@ onUnmounted(() => {
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .lyrics-meta-item {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
-  }
-
-  .lyrics-meta-item:last-child {
-    text-align: end;
-  }
-
-  .lyrics-meta-item:not(:first-child):not(:last-child) {
+    align-items: center;
+    justify-content: end;
     text-align: center;
   }
 
