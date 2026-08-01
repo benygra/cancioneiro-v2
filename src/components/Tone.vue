@@ -11,7 +11,7 @@ const props = defineProps({
 
 const emit = defineEmits(['tone-change']);
 
-const { getScale, indexOfTone, transposeChord, transposeSpan } = useToneTranslator();
+const { getScale, getDefaultUseFlat, indexOfTone, transposeChord, transposeSpan } = useToneTranslator();
 
 const useFlat = ref(false);
 const semitones = ref(0);
@@ -50,12 +50,14 @@ function selectTone(tone) {
 
   captureOriginals();
   semitones.value = targetIdx - baseIdx;
+  useFlat.value = getDefaultUseFlat(tone);
   applyTranspose();
 }
 
 function step(delta) {
   captureOriginals();
   semitones.value += delta;
+  useFlat.value = getDefaultUseFlat(transposeChord(props.song.tone, semitones.value));
   applyTranspose();
 }
 

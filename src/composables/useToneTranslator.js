@@ -28,6 +28,8 @@ const FLAT_CHROMATIC = [
   'B'
 ];
 
+const DEFAULT_FLAT = ['F', 'A#', 'Bb', 'D#', 'Eb', 'G#', 'Ab', 'C#', 'Db'];
+
 const INDEXES = new Map();
 
 function loadIndexes(scale) {
@@ -44,6 +46,8 @@ const CHORD_ROOT_RE = /[A-G][#b]?/g;
 export function useToneTranslator() {
 
     const getScale = (useFlat=false) => useFlat ? FLAT_CHROMATIC : SHARP_CHROMATIC;
+
+    const getDefaultUseFlat = (scale) => DEFAULT_FLAT.includes(scale);
 
     const indexOfTone = (tone) => INDEXES.get(tone);
 
@@ -65,6 +69,6 @@ export function useToneTranslator() {
         });
     }
 
-    return { getScale, indexOfTone, transposeChord, transposeSpan } ;
+    return { getScale, getDefaultUseFlat, indexOfTone, transposeChord, transposeSpan } ;
 }
 
