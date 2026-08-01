@@ -22,9 +22,10 @@ let originals = new WeakMap();
 const buttonLabel = computed(() => useFlat.value ? '♭' : '♯');
 const scale = computed(() => getScale(props.song.tone, useFlat.value));
 
-const getCurrentTone = () => transposeChord(props.song.tone, semitones.value, useFlat.value);
+const getRealTone = () => transposeChord(props.song.tone, semitones.value, useFlat.value);
+const getCapoTone = () => transposeChord(props.song.tone, semitones.value - capoInput.value, useFlat.value);
 
-const currentTone = computed(() => getCurrentTone());
+const currentTone = computed(() => getRealTone());
 
 watch(currentTone, (newTone) => {
   emit('tone-change', newTone);
@@ -53,16 +54,16 @@ function selectTone(tone) {
   if (targetIdx === undefined || baseIdx === undefined) return;
 
   semitones.value = targetIdx - baseIdx;
-  useFlat.value = getDefaultUseFlat(tone);
   capoInput.value = 0; emit('capo-change', capoInput.value);
+  useFlat.value = getDefaultUseFlat(getCapoTone());
   applyTranspose();
 
 }
 
 function step(delta) {
   semitones.value += delta;
-  useFlat.value = getDefaultUseFlat(getCurrentTone());
   capoInput.value = 0; emit('capo-change', capoInput.value);
+  useFlat.value = getDefaultUseFlat(getCapoTone());
   applyTranspose();
 }
 
@@ -90,8 +91,8 @@ watch(
 
     originals = new WeakMap();
     semitones.value = 0;
-    useFlat.value = getDefaultUseFlat(props.song.tone);
     capoInput.value = props.song.capo ?? 0;
+    useFlat.value = getDefaultUseFlat(getCapoTone());
 
     captureOriginals();
     applyTranspose();

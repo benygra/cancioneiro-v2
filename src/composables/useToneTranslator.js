@@ -28,7 +28,7 @@ const FLAT_CHROMATIC = [
   'B'
 ];
 
-const DEFAULT_FLAT = ['F', 'A#', 'Bb', 'D#', 'Eb', 'G#', 'Ab', 'C#', 'Db'];
+const DEFAULT_FLAT = ['F', 'Dm', 'A#', 'Bb', 'Gm', 'D#', 'Eb', 'Cm', 'G#', 'Ab', 'Fm'];
 
 const INDEXES = new Map();
 
@@ -42,11 +42,12 @@ loadIndexes(SHARP_CHROMATIC);
 loadIndexes(FLAT_CHROMATIC);
 
 const CHORD_ROOT_RE = /[A-G][#b]?/g;
+const CHORD_TONE_RE = /[A-G][#b]?m?/g;
 
 export function useToneTranslator() {
 
-    function stripTone(tone) {
-        const match = tone.match(CHORD_ROOT_RE);
+    function stripTone(tone, regex=CHORD_ROOT_RE) {
+        const match = tone.match(regex);
         if (!match) return null;
         return match[0];
     }
@@ -59,7 +60,7 @@ export function useToneTranslator() {
         return chromaticScale.map((item) => item + tone.substring(toneStripped.length));
     };
 
-    const getDefaultUseFlat = (scale) => DEFAULT_FLAT.includes(stripTone(scale));
+    const getDefaultUseFlat = (scale) => DEFAULT_FLAT.includes(stripTone(scale, CHORD_TONE_RE));
 
     const indexOfTone = (tone) => INDEXES.get(stripTone(tone));
 
