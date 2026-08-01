@@ -154,6 +154,11 @@
     "moment": "Ofertório, Mariana",
     "tone": "G"
   },
+  "se_vos_amardes": {
+    "title": "Se vos amardes",
+    "moment": "Ofertório",
+    "tone": "F"
+  },
   "santo_01": {
     "title": "Santo #01",
     "moment": "Santo",
@@ -482,6 +487,11 @@
   "cantarei_se_cres_em_deus": {
     "title": "Cantarei (Se crês em Deus)",
     "moment": "Ação de Graças, Final",
+    "tone": "C"
+  },
+  "tu_que_nas_margens_do_lago": {
+    "title": "Tu que nas margens do lago",
+    "moment": "Ação de Graças, Ofertório",
     "tone": "C"
   },
   "onde_deus_te_levar": {
