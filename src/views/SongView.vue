@@ -1,11 +1,13 @@
 <script setup>
 
-import { ref, computed, defineAsyncComponent, watchEffect } from 'vue';
+import { ref, computed, defineAsyncComponent, watchEffect, onUnmounted } from 'vue';
 
 import Tone from '@/components/Tone.vue';
 import NotFound from '@/components/NotFound.vue';
 
 import songs_map from '@/assets/songs_map.json';
+
+import { DEFAULT_TITLE } from "@/constants.js";
 
 /**
  * This view takes into account the id of a song.
@@ -47,6 +49,10 @@ const onToneChange = (tone) => displayTone.value = tone;
  */
 watchEffect(() => {
   document.title = song.value ? song.value.title : 'Não disponível';
+});
+
+onUnmounted(() => {
+  document.title = DEFAULT_TITLE;
 });
 
 </script>

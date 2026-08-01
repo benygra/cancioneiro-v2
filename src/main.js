@@ -8,6 +8,10 @@ import router from './router';
 import './assets/main.css';
 import './assets/chords.css';
 
+import { DEFAULT_TITLE } from './constants.js';
+
+document.title = DEFAULT_TITLE;
+
 const app = createApp(App);
 
 app.use(router);
