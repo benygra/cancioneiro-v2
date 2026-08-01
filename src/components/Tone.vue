@@ -74,13 +74,7 @@ function toggleChromatic() {
 
 function capoChange() {
   emit('capo-change', capoInput.value);
-  applyTranspose();
-}
-
-
-async function applyInitialCapo() {
-  await nextTick();
-  captureOriginals();
+  useFlat.value = getDefaultUseFlat(getCapoTone());
   applyTranspose();
 }
 
@@ -98,10 +92,6 @@ watch(
     applyTranspose();
   }
 );
-
-onMounted(() => {
-  applyInitialCapo();
-});
 
 </script>
 
