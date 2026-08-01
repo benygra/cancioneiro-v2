@@ -45,19 +45,33 @@ const CHORD_ROOT_RE = /[A-G][#b]?/g;
 
 export function useToneTranslator() {
 
-    const getScale = (useFlat=false) => useFlat ? FLAT_CHROMATIC : SHARP_CHROMATIC;
+    function stripTone(tone) {
+        const match = tone.match(CHORD_ROOT_RE);
+        if (!match) return null;
+        return match[0];
+    }
 
-    const getDefaultUseFlat = (scale) => DEFAULT_FLAT.includes(scale);
+    function getScale(tone='', useFlat=false) {
+        const chromaticScale = useFlat ? FLAT_CHROMATIC : SHARP_CHROMATIC;
 
-    const indexOfTone = (tone) => INDEXES.get(tone);
+        const toneStripped = stripTone(tone);
+
+        return chromaticScale.map((item) => item + tone.substring(toneStripped.length));
+    };
+
+    const getDefaultUseFlat = (scale) => DEFAULT_FLAT.includes(stripTone(scale));
+
+    const indexOfTone = (tone) => INDEXES.get(stripTone(tone));
 
     function transposeChord(chord, semitones, useFlat=false) {
-        const chromaticScale = getScale(useFlat);
+        const chromaticScale = useFlat ? FLAT_CHROMATIC : SHARP_CHROMATIC;
 
-        const idx = INDEXES.get(chord);
-        if (idx === undefined) return null;
+        const chordStripped = stripTone(chord);
+        if (!chordStripped) return null;
 
-        return chromaticScale[((idx + semitones) % chromaticScale.length + chromaticScale.length) % chromaticScale.length];   
+        const idx = INDEXES.get(chordStripped);
+
+        return chromaticScale[((idx + semitones) % chromaticScale.length + chromaticScale.length) % chromaticScale.length] + chord.substring(chordStripped.length);
     }
 
     function transposeSpan(span, semitones, useFlat=false) {

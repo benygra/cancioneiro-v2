@@ -18,7 +18,7 @@ const semitones = ref(0);
 let originals = new WeakMap();
 
 const buttonLabel = computed(() => useFlat.value ? '♭' : '♯');
-const scale = computed(() => getScale(useFlat.value));
+const scale = computed(() => getScale(props.song.tone, useFlat.value));
 
 const currentTone = computed(() => transposeChord(props.song.tone, semitones.value, useFlat.value));
 
