@@ -30,11 +30,11 @@ const currentCapoTone = computed(() => getCapoTone());
 
 watch(currentRealTone, (newTone) => {
   emit('real-tone-change', newTone);
-});
+}, { immediate: true });
 
 watch(currentCapoTone, (newTone) => {
   emit('capo-tone-change', newTone);
-});
+}, { immediate: true });
 
 function captureOriginals() {
   if (!props.lyrics) return;
@@ -87,13 +87,11 @@ watch(
     if (!ready) return; // wait until the real DOM is actually there
 
     originals = new WeakMap();
-    semitones.value = props.song.capo ?? 0;
-    capoInput.value = props.song.capo ?? 0;
     useFlat.value = getDefaultUseFlat(getCapoTone());
 
     captureOriginals();
     applyTranspose();
-  }
+  },
 );
 
 </script>

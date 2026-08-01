@@ -44,13 +44,15 @@ const lyricsReady = ref(false);
 function onLyricsMounted() {
   lyricsReady.value = true;
 }
+const displayRealTone = ref(null);
+const displayCapoTone = ref(null);
 
 watch(() => props.id, () => {
   lyricsReady.value = false;
+  displayRealTone.value = null;
+  displayCapoTone.value = null;
 });
 
-const displayRealTone = ref(null);
-const displayCapoTone = ref(null);
 
 const onRealToneChange = (tone) => displayRealTone.value = tone;
 const onCapoToneChange = (tone) => displayCapoTone.value = tone;
@@ -60,7 +62,7 @@ const displayCapo = computed(() => localCapo.value ?? song.value?.capo);
 
 const onCapoChange = (capo) => localCapo.value = capo;
 
-watch(() => props.id, () => { localCapo.value = null; });
+watch(() => props.id, () => localCapo.value = null);
 
 /**
  * Changes the browser tab title to the song's one.
