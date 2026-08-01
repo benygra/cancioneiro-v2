@@ -35,7 +35,7 @@ function captureOriginals() {
   if (!props.lyrics) return;
 
   props.lyrics.querySelectorAll('.chord').forEach(span => {
-    if (!originals.has(span)) originals.set(span, span.textContent);
+    if (!originals.has(span)) originals.set(span, transposeSpan(span.textContent, capoInput.value, useFlat.value));
   });
 }
 
@@ -54,7 +54,6 @@ function selectTone(tone) {
   if (targetIdx === undefined || baseIdx === undefined) return;
 
   semitones.value = targetIdx - baseIdx;
-  capoInput.value = 0; emit('capo-change', capoInput.value);
   useFlat.value = getDefaultUseFlat(getCapoTone());
   applyTranspose();
 
@@ -62,7 +61,6 @@ function selectTone(tone) {
 
 function step(delta) {
   semitones.value += delta;
-  capoInput.value = 0; emit('capo-change', capoInput.value);
   useFlat.value = getDefaultUseFlat(getCapoTone());
   applyTranspose();
 }
