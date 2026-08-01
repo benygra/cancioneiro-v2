@@ -43,6 +43,10 @@ const displayTone = ref(null);
 
 const onToneChange = (tone) => displayTone.value = tone;
 
+const displayCapo = ref(song.value?.capo);
+
+const onCapoChange = (capo) => displayCapo.value = capo;
+
 /**
  * Changes the browser tab title to the song's one.
  * If the song is not available, shows a default text.
@@ -66,6 +70,10 @@ onUnmounted(() => {
           <strong class="lyrics-meta-title">Tom</strong>
           <span class="chord-style">{{ displayTone ?? song.tone }}</span>
         </div>
+        <div class="lyrics-meta-item" v-if="displayCapo">
+          <strong class="lyrics-meta-title">Capo</strong>
+          <span>{{ displayCapo ?? song.capo }}</span>
+        </div>
           <div class="lyrics-meta-item">
             <strong class="lyrics-meta-title">Momento</strong>
             <span class="normal-text">{{ song.moment }}</span>
@@ -79,7 +87,12 @@ onUnmounted(() => {
         <div class="menu">
           <div class="menu-item">
             <h3 class="section-header-small">Tonalidade</h3>
-            <Tone :song="song" :lyrics="lyricsContainer" @tone-change="onToneChange"/>
+            <Tone 
+              :song="song" 
+              :lyrics="lyricsContainer" 
+              @tone-change="onToneChange"
+              @capo-change="onCapoChange"
+            />
           </div>
         </div>
       </div>
@@ -101,7 +114,23 @@ onUnmounted(() => {
   background-color: white;
   padding: 0.7em 0;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+}
+
+.lyrics-meta-item:first-child {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.lyrics-meta-item:last-child {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.lyrics-meta-item:not(:first-child):not(:last-child) {
+  flex: 0 0 auto;
 }
 
 .lyrics-meta-title {
@@ -132,9 +161,15 @@ onUnmounted(() => {
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .lyrics-meta-item {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
-    align-items: center;
+  }
+
+  .lyrics-meta-item:last-child {
+    text-align: end;
+  }
+
+  .lyrics-meta-item:not(:first-child):not(:last-child) {
     text-align: center;
   }
 

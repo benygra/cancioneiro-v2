@@ -9,12 +9,13 @@ const props = defineProps({
     lyrics: Object,
 });
 
-const emit = defineEmits(['tone-change']);
+const emit = defineEmits(['tone-change', 'capo-change']);
 
 const { getScale, getDefaultUseFlat, indexOfTone, transposeChord, transposeSpan } = useToneTranslator();
 
 const useFlat = ref(false);
 const semitones = ref(0);
+const capoInput = ref(props.song.capo ?? 0);
 let originals = new WeakMap();
 
 const buttonLabel = computed(() => useFlat.value ? '♭' : '♯');
@@ -91,6 +92,17 @@ watch(() => props.song, () => {
       <button class="chromatic-btn" @click="toggleChromatic">{{ buttonLabel }}</button>
       <button class="chromatic-btn" @click="step(1)">+</button>
     </div>
+
+    <div class="capo-wrapper">
+      <p class="capo">Capo</p>
+      <input 
+        class="capo-number"
+        type="number"
+        name="capo-number"
+        v-model="capoInput"
+        @change="$emit('capo-change', capoInput)"
+      >
+    </div>
 </template>
 
 <style scoped>
@@ -151,6 +163,27 @@ watch(() => props.song, () => {
 
 .chromatic-btn:hover {
   background-color: var(--tone-btn-hover-bg-color);
+}
+
+.capo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--default-bg-color);
+  width: fit-content;
+  border-radius: 5px;
+  margin: 1em auto;
+}
+
+.capo {
+  padding-left: 0.5em;
+  text-align: center;
+}
+
+.capo-number {
+  margin: 0.5em;
+  width: 3.2em;
+  padding: 0.5em;
 }
 
 </style>
