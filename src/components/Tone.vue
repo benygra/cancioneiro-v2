@@ -1,12 +1,13 @@
 <script setup>
 
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, nextTick, onMounted  } from 'vue';
 
 import { useToneTranslator } from '@/composables/useToneTranslator';
 
 const props = defineProps({
     song: Object,
     lyrics: Object,
+    lyricsReady: Boolean,
 });
 
 const emit = defineEmits(['tone-change', 'capo-change']);
@@ -39,8 +40,6 @@ function captureOriginals() {
 
 function applyTranspose() {
   if (!props.lyrics) return;
-
-  captureOriginals();
 
   props.lyrics.querySelectorAll('.chord').forEach(span => {
     const original = originals.get(span) ?? span.textContent;
@@ -77,11 +76,30 @@ function capoChange() {
   applyTranspose();
 }
 
-watch(() => props.song, () => {
-  originals = new WeakMap();
-  semitones.value = 0;
-  capoInput.value = props.song.capo ?? 0;
-  useFlat.value = false;
+
+async function applyInitialCapo() {
+  await nextTick();
+  captureOriginals();
+  applyTranspose();
+}
+
+watch(
+  () => [props.song, props.lyricsReady],
+  ([, ready]) => {
+    if (!ready) return; // wait until the real DOM is actually there
+
+    originals = new WeakMap();
+    semitones.value = 0;
+    useFlat.value = getDefaultUseFlat(props.song.tone);
+    capoInput.value = props.song.capo ?? 0;
+
+    captureOriginals();
+    applyTranspose();
+  }
+);
+
+onMounted(() => {
+  applyInitialCapo();
 });
 
 </script>

@@ -1,6 +1,6 @@
 <script setup>
 
-import { ref, computed, defineAsyncComponent, watchEffect, onUnmounted } from 'vue';
+import { ref, computed, defineAsyncComponent, watch, watchEffect, onUnmounted } from 'vue';
 
 import Tone from '@/components/Tone.vue';
 import NotFound from '@/components/NotFound.vue';
@@ -39,13 +39,26 @@ const LyricsComponent = computed(() => {
 
 const lyricsContainer = ref(null);
 
+const lyricsReady = ref(false);
+
+function onLyricsMounted() {
+  lyricsReady.value = true;
+}
+
+watch(() => props.id, () => {
+  lyricsReady.value = false;
+});
+
 const displayTone = ref(null);
 
 const onToneChange = (tone) => displayTone.value = tone;
 
-const displayCapo = ref(song.value?.capo);
+const localCapo = ref(null);
+const displayCapo = computed(() => localCapo.value ?? song.value?.capo);
 
-const onCapoChange = (capo) => displayCapo.value = capo;
+const onCapoChange = (capo) => localCapo.value = capo;
+
+watch(() => props.id, () => { localCapo.value = null; });
 
 /**
  * Changes the browser tab title to the song's one.
@@ -82,14 +95,18 @@ onUnmounted(() => {
 
       <div class="wrapper" v-if="LyricsComponent">
         <div class="lyrics" ref="lyricsContainer">
-          <component  :is="LyricsComponent" />
+          <component
+            :is="LyricsComponent"
+            @vue:mounted="onLyricsMounted"
+          />
         </div>
         <div class="menu">
           <div class="menu-item">
             <h3 class="section-header-small">Tonalidade</h3>
             <Tone 
-              :song="song" 
-              :lyrics="lyricsContainer" 
+              :song="song"
+              :lyrics="lyricsContainer"
+              :lyrics-ready="lyricsReady"
               @tone-change="onToneChange"
               @capo-change="onCapoChange"
             />
