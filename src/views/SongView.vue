@@ -110,7 +110,7 @@ onUnmounted(() => {
         <div class="menu">
           <div class="menu-item">
             <h3 class="section-header-small">Tonalidade</h3>
-            <Tone 
+            <Tone
               :song="song"
               :lyrics="lyricsContainer"
               :lyrics-ready="lyricsReady"
@@ -156,15 +156,13 @@ onUnmounted(() => {
 }
 
 .menu {
-  position: sticky;
-  top: 100px;
-  width: 400px;
-  height: 400px;
+  width: 17vw;
   margin-top: 1em;
 }
 
 .menu-item {
   border-bottom: 1px solid var(--default-bg-color);
+  padding-bottom: 1em;
 }
 
 /* Mobile responsiveness */

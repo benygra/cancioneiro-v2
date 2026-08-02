@@ -34,13 +34,15 @@ watch(currentRealTone, (newTone) => {
 
 watch(currentCapoTone, (newTone) => {
   emit('capo-tone-change', newTone);
+  emit('capo-change', capoInput.value);
+  useFlat.value = getDefaultUseFlat(newTone);
 }, { immediate: true });
 
 function captureOriginals() {
   if (!props.lyrics) return;
 
   props.lyrics.querySelectorAll('.chord').forEach(span => {
-    if (!originals.has(span)) originals.set(span, span.textContent);
+    originals.set(span, span.textContent);
   });
 }
 
@@ -75,12 +77,6 @@ function toggleChromatic() {
   applyTranspose();
 }
 
-function capoChange() {
-  emit('capo-change', capoInput.value);
-  useFlat.value = getDefaultUseFlat(getCapoTone());
-  applyTranspose();
-}
-
 watch(
   () => [props.song, props.lyricsReady],
   ([, ready]) => {
@@ -97,16 +93,17 @@ watch(
 </script>
 
 <template>
+  <div class="big-wrapper">
     <ul class="tones">
-        <li
-            class="item"
-            :class="{ 'item-selected': currentRealTone === tone }"
-            v-for="tone in scale"
-            :key="tone"
-            @click="selectTone(tone)"
-        >
-            <span class="item-text">{{ tone }}</span>
-        </li>
+      <li
+        class="item"
+        :class="{ 'item-selected': currentRealTone === tone }"
+        v-for="tone in scale"
+        :key="tone"
+        @click="selectTone(tone)"
+      >
+        <span class="item-text">{{ tone }}</span>
+      </li>
     </ul>
 
     <div class="buttons">
@@ -119,29 +116,40 @@ watch(
       <p class="capo">Capo</p>
       <input 
         class="capo-number"
-        type="number"
+        type="numeric"
         name="capo-number"
+        min="0"
         v-model="capoInput"
-        @change="capoChange"
+        @change="applyTranspose"
       >
     </div>
+  </div>
 </template>
 
 <style scoped>
+
+.big-wrapper {
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  gap: 0.9em;
+}
 
 .tones {
   display: flex;
   list-style-type: none;
   flex-wrap: wrap;
-  gap: 0.7em;
+  gap: 0.4em;
   justify-content: space-evenly;
   align-items: center;
 }
 
 .item {
   color: var(--chord-text-color);
-  width: 3em;
-  height: 3em;
+  width: 2.6em;
+  height: 2.6em;
   cursor: pointer;
   border: 2px solid var(--nav-bottom-color);
   border-radius: 50%;
@@ -167,18 +175,16 @@ watch(
 
 .buttons {
   display: flex;
-  gap: 0.1em;
+  gap: 0.3em;
   justify-content: center;
-  margin: 0.9em 0;
 }
 
 .chromatic-btn {
   width: 25%;
-  height: 25%;
   border: 2px solid var(--nav-bottom-color);
   background-color: var(--default-bg-color);
   border-radius: 5px;
-  font-size: 1.5em;
+  font-size: 1.4em;
   color: var(--nav-text-color);
   cursor: pointer;
 }
@@ -194,7 +200,8 @@ watch(
   border: 2px solid var(--default-bg-color);
   width: fit-content;
   border-radius: 5px;
-  margin: 1em auto;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .capo {
@@ -203,9 +210,9 @@ watch(
 }
 
 .capo-number {
-  margin: 0.5em;
-  width: 3.2em;
-  padding: 0.5em;
+  text-align: center;
+  margin: 0.4em;
+  width: 2.1em;
 }
 
 </style>
