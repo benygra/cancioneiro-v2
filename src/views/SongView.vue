@@ -67,7 +67,7 @@ onUnmounted(() => {
   document.title = DEFAULT_TITLE;
 });
 
-const { isChord, isMinorSymbol, decorateChord, decorateMinorSymbol, decorate,
+const { isChord, isMinorSymbol, decorateChord, decorateMinorSymbol, decorate, undecorateChord, undecorateMinorSymbol, undecorate,
   getScale, getDefaultUseFlat, indexOfTone, transposeChord, transposeSpan
  } = useDecorator();
 
@@ -220,14 +220,14 @@ watch(
                 <button 
                     class="decorator-btn" 
                     :class="{'decorator-item-selected': !isChord}"
-                    @click="isChord = false"
+                    @click="isChord = false; applyTranspose()"
                 >
-                    {{ currentRealTone }}
+                    {{ undecorateChord(currentRealTone) }}
                 </button>
                 <button 
                     class="decorator-btn" 
                     :class="{'decorator-item-selected': isChord}"
-                    @click="isChord = true"
+                    @click="isChord = true; applyTranspose()"
                 >
                     {{ decorateChord(currentRealTone) }}
                 </button>
@@ -237,16 +237,16 @@ watch(
                 <button 
                     class="decorator-btn" 
                     :class="{'decorator-item-selected': !isMinorSymbol}"
-                    @click="isMinorSymbol = false"
+                    @click="isMinorSymbol = false; applyTranspose()"
                 >
-                    m
+                    {{ undecorateMinorSymbol('-') }}
                 </button>
                 <button 
                     class="decorator-btn" 
                     :class="{'decorator-item-selected': isMinorSymbol}"
-                    @click="isMinorSymbol = true"
+                    @click="isMinorSymbol = true; applyTranspose()"
                 >
-                    {{decorateMinorSymbol('m')}}
+                    {{ decorateMinorSymbol('m') }}
                 </button>
               </div>
             </div>

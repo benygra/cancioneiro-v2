@@ -60,7 +60,7 @@ export function useToneTranslator() {
         return chromaticScale.map((item) => item + tone.substring(toneStripped.length));
     };
 
-    const getRawDefaultUseFlat = (scale) => DEFAULT_FLAT.includes(stripTone(scale, CHORD_TONE_RE));
+    const getRawDefaultUseFlat = (tone) => DEFAULT_FLAT.includes(stripTone(tone, CHORD_TONE_RE));
 
     const indexOfRawTone = (tone) => INDEXES.get(stripTone(tone));
 
