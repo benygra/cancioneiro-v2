@@ -44,8 +44,17 @@ const lyricsReady = ref(false);
 function onLyricsMounted() {
   lyricsReady.value = true;
 }
-const displayRealTone = ref(null);
-const displayCapoTone = ref(null);
+const localRealTone = ref(null);
+const localCapoTone = ref(null);
+const localCapo = ref(null);
+
+const onRealToneChange = (tone) => localRealTone.value = tone;
+const onCapoToneChange = (tone) => localCapoTone.value = tone;
+const onCapoChange = (capo) => localCapo.value = capo;
+
+const displayRealTone = computed(() => localRealTone.value ?? song.value.tone);
+const displayCapoTone = computed(() => localCapoTone.value ?? song.value.tone);
+const displayCapo = computed(() => localCapo.value ?? song.value?.capo);
 
 // Controls whether the mobile floating menu panel is expanded
 const menuOpen = ref(false);
@@ -53,21 +62,11 @@ const toggleMenu = () => menuOpen.value = !menuOpen.value;
 
 watch(() => props.id, () => {
   lyricsReady.value = false;
-  displayRealTone.value = null;
-  displayCapoTone.value = null;
+  localRealTone.value = null;
+  localCapoTone.value = null;
+  localCapo.value = null
   menuOpen.value = false
 });
-
-
-const onRealToneChange = (tone) => displayRealTone.value = tone;
-const onCapoToneChange = (tone) => displayCapoTone.value = tone;
-
-const localCapo = ref(null);
-const displayCapo = computed(() => localCapo.value ?? song.value?.capo);
-
-const onCapoChange = (capo) => localCapo.value = capo;
-
-watch(() => props.id, () => localCapo.value = null);
 
 /**
  * Changes the browser tab title to the song's one.
@@ -90,14 +89,14 @@ onUnmounted(() => {
       <div class="lyrics-meta">
         <div class="lyrics-meta-item">
           <strong class="lyrics-meta-title">Tom</strong>
-          <span class="chord-style">{{ displayRealTone ?? song.tone }}</span>
+          <span class="chord-style">{{ displayRealTone }}</span>
         </div>
-        <div class="lyrics-meta-item" v-if="displayCapo">
-          <span class="chord-style">({{ displayCapoTone ?? song.tone }})</span>
+        <div class="lyrics-meta-item" v-if="displayCapo > 0">
+          <span class="chord-style">({{ displayCapoTone }})</span>
         </div>
-        <div class="lyrics-meta-item" v-if="displayCapo">
+        <div class="lyrics-meta-item" v-if="displayCapo > 0">
           <strong class="lyrics-meta-title">Capo</strong>
-          <span>{{ displayCapo ?? song.capo }}</span>
+          <span>{{ displayCapo }}</span>
         </div>
           <div class="lyrics-meta-item">
             <strong class="lyrics-meta-title">Momento</strong>

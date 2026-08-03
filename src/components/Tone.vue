@@ -22,21 +22,8 @@ let originals = new WeakMap();
 const buttonLabel = computed(() => useFlat.value ? '♭' : '♯');
 const scale = computed(() => getScale(props.song.tone, useFlat.value));
 
-const getRealTone = () => transposeChord(props.song.tone, semitones.value, useFlat.value);
-const getCapoTone = () => transposeChord(props.song.tone, semitones.value - capoInput.value, useFlat.value);
-
-const currentRealTone = computed(() => getRealTone());
-const currentCapoTone = computed(() => getCapoTone());
-
-watch(currentRealTone, (newTone) => {
-  emit('real-tone-change', newTone);
-}, { immediate: true });
-
-watch(currentCapoTone, (newTone) => {
-  emit('capo-tone-change', newTone);
-  emit('capo-change', capoInput.value);
-  useFlat.value = getDefaultUseFlat(newTone);
-}, { immediate: true });
+const currentRealTone = computed(() => transposeChord(props.song.tone, semitones.value, useFlat.value));
+const currentCapoTone = computed(() => transposeChord(props.song.tone, semitones.value - capoInput.value, useFlat.value));
 
 function captureOriginals() {
   if (!props.lyrics) return;
@@ -55,25 +42,35 @@ function applyTranspose() {
   });
 }
 
+function capoChange() {
+  emit('capo-tone-change', currentCapoTone.value);
+  emit('capo-change', capoInput.value);
+  useFlat.value = getDefaultUseFlat(currentCapoTone.value);
+  applyTranspose();
+}
+
+function changeTone(newSemitones) {
+  semitones.value = newSemitones;
+  emit('real-tone-change', currentRealTone.value);
+  capoChange();
+}
+
 function selectTone(tone) {
   const targetIdx = indexOfTone(tone);
   const baseIdx = indexOfTone(props.song.tone);
   if (targetIdx === undefined || baseIdx === undefined) return;
 
-  semitones.value = targetIdx - baseIdx;
-  useFlat.value = getDefaultUseFlat(getCapoTone());
-  applyTranspose();
-
+  changeTone(targetIdx - baseIdx);
 }
 
 function step(delta) {
-  semitones.value += delta;
-  useFlat.value = getDefaultUseFlat(getCapoTone());
-  applyTranspose();
+  changeTone(semitones.value + delta);
 }
 
 function toggleChromatic() {
   useFlat.value = !useFlat.value;
+  emit('real-tone-change', currentRealTone.value);
+  emit('capo-tone-change', currentCapoTone.value);
   applyTranspose();
 }
 
@@ -83,7 +80,7 @@ watch(
     if (!ready) return; // wait until the real DOM is actually there
 
     originals = new WeakMap();
-    useFlat.value = getDefaultUseFlat(getCapoTone());
+    useFlat.value = getDefaultUseFlat(currentCapoTone.value);
 
     captureOriginals();
     applyTranspose();
@@ -118,9 +115,8 @@ watch(
         class="capo-number"
         type="numeric"
         name="capo-number"
-        min="0"
         v-model="capoInput"
-        @change="applyTranspose"
+        @change="capoChange"
       >
     </div>
   </div>

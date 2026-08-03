@@ -8,7 +8,7 @@ import CartListing from './CartListing.vue';
 
 import { useCart } from '@/composables/useCart';
 
-const { cart, removeFromCart, clearAll } = useCart();
+const { cart, clearAll } = useCart();
 
 const isOpen = ref(false); // reference to the cart panel being opened or not.
 
