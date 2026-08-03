@@ -48,15 +48,15 @@ function saveCart() {
  */
 watch(cart, saveCart, { deep: true });
 
-/**
- * Warns the user if any modification to the browser's tab (close/refresh)
- * affects the non-empty cart being built.
- */
-window.addEventListener('beforeunload', (e) => {
-  if (cart.value.length > 0) {
-    e.preventDefault();
-  }
-});
+// /**
+//  * Warns the user if any modification to the browser's tab (close/refresh)
+//  * affects the non-empty cart being built.
+//  */
+// window.addEventListener('beforeunload', (e) => {
+//   if (cart.value.length > 0) {
+//     e.preventDefault();
+//   }
+// });
 
 /**
  * This composable exposes an API to add and remove items from the cart.

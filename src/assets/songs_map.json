@@ -67,7 +67,8 @@
   "perdoa_senhor": {
     "title": "Perdoa Senhor",
     "moment": "Ato Penitencial",
-    "tone": "F"
+    "tone": "E",
+    "capo": 1
   },
   "gloria_gloria_gloria": {
     "title": "Glória Glória Glória",
@@ -92,7 +93,8 @@
   "senhor_tem_piedade_somos_o_teu_povo_pecador": {
     "title": "Senhor tem piedade (Somos o Teu povo pecador)",
     "moment": "Ato Penitencial",
-    "tone": "C#"
+    "tone": "C",
+    "capo": 1
   },
   "senhor_misericordia": {
     "title": "Senhor misericórdia (Montjo)",
@@ -147,7 +149,13 @@
   "embarcar_deixar_para_tras": {
     "title": "Embarcar",
     "moment": "Ofertório",
-    "tone": "B"
+    "tone": "A",
+    "capo": 2
+  },
+  "eu_nao_sou_nada": {
+    "title": "Eu não sou nada",
+    "moment": "Ofertório",
+    "tone": "C"
   },
   "quando_nos_te_ofertamos": {
     "title": "Quando nós te ofertamos",
@@ -247,12 +255,14 @@
   "meu_deus_eu_creio": {
     "title": "Meu Deus eu creio",
     "moment": "Adoração",
-    "tone": "Em"
+    "tone": "Am",
+    "capo": 7
   },
   "tu_es_o_sol": {
     "title": "Tu és o Sol",
     "moment": "Mariano, Ação de Graças",
-    "tone": "D"
+    "tone": "C",
+    "capo": 2
   },
   "maria_de_nazare": {
     "title": "Maria de Nazaré",
@@ -286,8 +296,9 @@
   },
   "tua_voz_nos_chamou": {
     "title": "Tua voz nos chamou",
-    "moment": "Ação de Graças",
-    "tone": "D"
+    "moment": "Ação de Graças, Casamento",
+    "tone": "C",
+    "capo": 2
   },
   "oceans": {
     "title": "Oceans",
@@ -322,11 +333,6 @@
   "cantarei_ao_senhor": {
     "title": "Cantarei ao Senhor",
     "moment": "Taizé, Ação de Graças",
-    "tone": "Em"
-  },
-  "cantarei_ao_senhor_2": {
-    "title": "Cantarei ao Senhor",
-    "moment": "Taizé, Ação de Graças",
     "tone": "Bm"
   },
   "senhor_vela_por_mim": {
@@ -354,15 +360,11 @@
     "moment": "Adoração, Vigília",
     "tone": "D"
   },
-  "eu_nao_sou_nada": {
-    "title": "Eu não sou nada",
-    "moment": "Ação de Graças",
-    "tone": "C"
-  },
   "entrega": {
     "title": "Entrega",
     "moment": "Duas vezes, Ação de Graças",
-    "tone": "Eb"
+    "tone": "D",
+    "capo": 1
   },
   "vede_senhor_quanta_gente": {
     "title": "Vêde Senhor",
@@ -402,7 +404,8 @@
   "sopro_leve": {
     "title": "Sopro leve",
     "moment": "Adoração, Vigília, Ação de Graças",
-    "tone": "Eb"
+    "tone": "D",
+    "capo": 1
   },
   "luz_terna_e_suave_no_meio_da_noite": {
     "title": "Luz terna e suave",
@@ -422,7 +425,8 @@
   "ruinas": {
     "title": "Ruínas",
     "moment": "Ação de Graças, CF",
-    "tone": "C"
+    "tone": "G",
+    "capo": 5
   },
   "es_a_minha_vida": {
     "title": "És a minha vida",
@@ -452,12 +456,14 @@
   "oracao_de_sao_pedro": {
     "title": "Oração de São Pedro",
     "moment": "Ação de Graças",
-    "tone": "C"
+    "tone": "A",
+    "capo": 3
   },
   "isaias_35": {
     "title": "Isaías 35",
     "moment": "Ação de Graças, CF",
-    "tone": "F#m"
+    "tone": "Dm",
+    "capo": 4
   },
   "tao_perto_de_mim": {
     "title": "Tão perto de mim",
@@ -567,7 +573,8 @@
   "deus_em_mim": {
     "title": "Deus em mim",
     "moment": "Mariano, Final",
-    "tone": "B"
+    "tone": "A",
+    "capo": 2
   },
   "super_heroi": {
     "title": "Super-herói",
@@ -597,7 +604,8 @@
   "ser_jovem": {
     "title": "Ser jovem (pág. 144)",
     "moment": "CF",
-    "tone": "C#"
+    "tone": "C",
+    "capo": 1
   },
   "somos_um": {
     "title": "Somos um",
@@ -643,10 +651,5 @@
     "title": "Abençoa o Nosso Sim",
     "moment": "Casamento",
     "tone": "D"
-  },
-  "abencoa_o_nosso_sim_2": {
-    "title": "Abençoa o Nosso Sim",
-    "moment": "Casamento",
-    "tone": "A"
   }
 }
