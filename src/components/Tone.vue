@@ -85,6 +85,9 @@ watch(
     originals = new WeakMap();
     useFlat.value = getDefaultUseFlat(currentCapoTone.value);
 
+    emit('real-tone-change', currentRealTone.value);
+    emit('capo-tone-change', currentCapoTone.value);
+
     captureOriginals();
     applyTranspose();
   },
