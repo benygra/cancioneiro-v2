@@ -43,9 +43,9 @@ function applyTranspose() {
 }
 
 function capoChange() {
+  useFlat.value = getDefaultUseFlat(currentCapoTone.value);
   emit('capo-tone-change', currentCapoTone.value);
   emit('capo-change', capoInput.value);
-  useFlat.value = getDefaultUseFlat(currentCapoTone.value);
   applyTranspose();
 }
 
