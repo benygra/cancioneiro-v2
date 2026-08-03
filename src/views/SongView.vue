@@ -77,11 +77,15 @@ const semitones = ref(song.value.capo ?? 0);
 const capoInput = ref(song.value.capo ?? 0);
 let originals = new WeakMap();
 
-const buttonLabel = computed(() => useFlat.value ? '♭' : '♯');
+const chromaticButtonLabel = computed(() => useFlat.value ? '♭' : '♯');
 const scale = computed(() => getScale(song.value.tone, useFlat.value));
 
 const currentRealTone = computed(() => transposeChord(song.value.tone, semitones.value, useFlat.value));
 const currentCapoTone = computed(() => transposeChord(song.value.tone, semitones.value - capoInput.value, useFlat.value));
+
+// for display
+const displayCapo = ref(capoInput.value);
+const displayCapoTone = ref(currentCapoTone.value);
 
 function captureOriginals() {
   if (!lyricsContainer.value) return;
@@ -102,12 +106,15 @@ function applyTranspose() {
 
 function capoChange() {
   useFlat.value = getDefaultUseFlat(currentCapoTone.value);
+  displayCapo.value = capoInput.value;
+  displayCapoTone.value = currentCapoTone.value;
   applyTranspose();
 }
 
 function changeTone(newSemitones) {
   semitones.value = newSemitones;
   useFlat.value = getDefaultUseFlat(currentCapoTone.value);
+  displayCapoTone.value = currentCapoTone.value;
   applyTranspose();
 }
 
@@ -152,12 +159,12 @@ watch(
           <strong class="lyrics-meta-title">Tom</strong>
           <span class="chord-style">{{ currentRealTone }}</span>
         </div>
-        <div class="lyrics-meta-item" v-if="capoInput > 0">
-          <span class="chord-style">({{ currentCapoTone }})</span>
+        <div class="lyrics-meta-item" v-if="displayCapo > 0">
+          <span class="chord-style">({{ displayCapoTone }})</span>
         </div>
-        <div class="lyrics-meta-item" v-if="capoInput > 0">
+        <div class="lyrics-meta-item" v-if="displayCapo > 0">
           <strong class="lyrics-meta-title">Capo</strong>
-          <span>{{ capoInput }}</span>
+          <span>{{ displayCapo }}</span>
         </div>
           <div class="lyrics-meta-item">
             <strong class="lyrics-meta-title">Momento</strong>
@@ -191,7 +198,7 @@ watch(
 
               <div class="chromatic-buttons">
                 <button class="chromatic-btn" @click="step(-1)">-</button>
-                <button class="chromatic-btn" @click="toggleChromatic">{{ buttonLabel }}</button>
+                <button class="chromatic-btn" @click="toggleChromatic">{{ chromaticButtonLabel }}</button>
                 <button class="chromatic-btn" @click="step(1)">+</button>
               </div>
 
