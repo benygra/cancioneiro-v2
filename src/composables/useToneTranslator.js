@@ -44,15 +44,15 @@ loadIndexes(FLAT_CHROMATIC);
 const CHORD_ROOT_RE = /[A-G][#b]?/g;
 const CHORD_TONE_RE = /[A-G][#b]?m?/g;
 
+function stripTone(tone, regex=CHORD_ROOT_RE) {
+    const match = tone.match(regex);
+    if (!match) return null;
+    return match[0];
+}
+
 export function useToneTranslator() {
 
-    function stripTone(tone, regex=CHORD_ROOT_RE) {
-        const match = tone.match(regex);
-        if (!match) return null;
-        return match[0];
-    }
-
-    function getScale(tone='', useFlat=false) {
+    function getRawScale(tone, useFlat) {
         const chromaticScale = useFlat ? FLAT_CHROMATIC : SHARP_CHROMATIC;
 
         const toneStripped = stripTone(tone);
@@ -60,11 +60,11 @@ export function useToneTranslator() {
         return chromaticScale.map((item) => item + tone.substring(toneStripped.length));
     };
 
-    const getDefaultUseFlat = (scale) => DEFAULT_FLAT.includes(stripTone(scale, CHORD_TONE_RE));
+    const getRawDefaultUseFlat = (scale) => DEFAULT_FLAT.includes(stripTone(scale, CHORD_TONE_RE));
 
-    const indexOfTone = (tone) => INDEXES.get(stripTone(tone));
+    const indexOfRawTone = (tone) => INDEXES.get(stripTone(tone));
 
-    function transposeChord(chord, semitones, useFlat=false) {
+    function transposeRawChord(chord, semitones, useFlat) {
         const chromaticScale = useFlat ? FLAT_CHROMATIC : SHARP_CHROMATIC;
 
         const chordStripped = stripTone(chord);
@@ -75,18 +75,15 @@ export function useToneTranslator() {
         return chromaticScale[((idx + semitones) % chromaticScale.length + chromaticScale.length) % chromaticScale.length] + chord.substring(chordStripped.length);
     }
 
-    function transposeSpan(span, semitones, useFlat=false, decoratorFn=null) {
+    function transposeRawSpan(span, semitones, useFlat=false) {
         if (!span) return;
 
         return span.replace(CHORD_ROOT_RE, (match) => {
-            const newTone = transposeChord(match, semitones, useFlat);
-            if (!newTone) return match;
-            if (!decoratorFn) return newTone;
-            
-            return decoratorFn(newTone);
+            const newTone = transposeRawChord(match, semitones, useFlat);
+            return newTone !== null ? newTone : match;
         });
     }
 
-    return { getScale, getDefaultUseFlat, indexOfTone, transposeChord, transposeSpan } ;
+    return { getRawScale, getRawDefaultUseFlat, indexOfRawTone, transposeRawChord, transposeRawSpan } ;
 }
 

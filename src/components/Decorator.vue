@@ -45,36 +45,36 @@ defineExpose({
 </script>
 
 <template>
-    <div class="big-wrapper">
+    <div class="decorator-big-wrapper">
         <p class="cipher-text">Cifra</p>
-        <div class="buttons">
+        <div class="decorator-buttons">
             <button 
-                class="btn" 
-                :class="{'selected': !isChord}"
+                class="decorator-btn" 
+                :class="{'decorator-item-selected': !isChord}"
                 @click="isChord = false"
             >
                 {{ tone }}
             </button>
             <button 
-                class="btn" 
-                :class="{'selected': isChord}"
+                class="decorator-btn" 
+                :class="{'decorator-item-selected': isChord}"
                 @click="isChord = true"
             >
                 {{ decorateChord(tone) }}
             </button>
         </div>
         <p class="cipher-text">Marca</p>
-        <div class="buttons">
+        <div class="decorator-buttons">
             <button 
-                class="btn" 
-                :class="{'selected': !isMinorSymbol}"
+                class="decorator-btn" 
+                :class="{'decorator-item-selected': !isMinorSymbol}"
                 @click="isMinorSymbol = false"
             >
                 m
             </button>
             <button 
-                class="btn" 
-                :class="{'selected': isMinorSymbol}"
+                class="decorator-btn" 
+                :class="{'decorator-item-selected': isMinorSymbol}"
                 @click="isMinorSymbol = true"
             >
                 {{decorateMinorSymbol('m')}}
@@ -85,7 +85,7 @@ defineExpose({
 
 <style scoped>
 
-.big-wrapper {
+.decorator-big-wrapper {
     font-size: 0.9rem;
     display: flex;
     flex-direction: column;
@@ -98,7 +98,7 @@ defineExpose({
     font-weight: bold;
 }
 
-.buttons {
+.decorator-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -110,7 +110,7 @@ defineExpose({
     gap: 0.3em;
 }
 
-.btn {
+.decorator-btn {
     padding: 0.3em;
     font-weight: bold;
     border: 2px solid var(--nav-bottom-color);
@@ -118,7 +118,7 @@ defineExpose({
     cursor: pointer;
 }
 
-.selected {
+.decorator-item-selected {
     background-color: var(--default-bg-color);
     color: white;
 }

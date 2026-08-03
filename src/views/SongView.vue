@@ -3,13 +3,12 @@
 import { ref, computed, defineAsyncComponent, watch, watchEffect, onUnmounted } from 'vue';
 
 import NotFound from '@/components/NotFound.vue';
-import Decorator from '@/components/Decorator.vue';
 
 import songs_map from '@/assets/songs_map.json';
 
 import { DEFAULT_TITLE } from "@/constants.js";
 
-import { useToneTranslator } from '@/composables/useToneTranslator';
+import { useDecorator } from '@/composables/useDecorator.js';
 
 /**
  * This view takes into account the id of a song.
@@ -51,8 +50,6 @@ function onLyricsMounted() {
 const menuOpen = ref(false);
 const toggleMenu = () => menuOpen.value = !menuOpen.value;
 
-const decorator = ref(null);
-
 watch(() => props.id, () => {
   lyricsReady.value = false;
   menuOpen.value = false;
@@ -70,7 +67,9 @@ onUnmounted(() => {
   document.title = DEFAULT_TITLE;
 });
 
-const { getScale, getDefaultUseFlat, indexOfTone, transposeChord, transposeSpan } = useToneTranslator();
+const { isChord, isMinorSymbol, decorateChord, decorateMinorSymbol, decorate,
+  getScale, getDefaultUseFlat, indexOfTone, transposeChord, transposeSpan
+ } = useDecorator();
 
 const useFlat = ref(false);
 const semitones = ref(song.value.capo ?? 0);
@@ -215,7 +214,42 @@ watch(
             </div>
           </div>
           <div class="menu-item">
-            
+            <div class="decorator-big-wrapper">
+              <p class="cipher-text">Cifra</p>
+              <div class="decorator-buttons">
+                <button 
+                    class="decorator-btn" 
+                    :class="{'decorator-item-selected': !isChord}"
+                    @click="isChord = false"
+                >
+                    {{ currentRealTone }}
+                </button>
+                <button 
+                    class="decorator-btn" 
+                    :class="{'decorator-item-selected': isChord}"
+                    @click="isChord = true"
+                >
+                    {{ decorateChord(currentRealTone) }}
+                </button>
+              </div>
+              <p class="cipher-text">Marca</p>
+              <div class="decorator-buttons">
+                <button 
+                    class="decorator-btn" 
+                    :class="{'decorator-item-selected': !isMinorSymbol}"
+                    @click="isMinorSymbol = false"
+                >
+                    m
+                </button>
+                <button 
+                    class="decorator-btn" 
+                    :class="{'decorator-item-selected': isMinorSymbol}"
+                    @click="isMinorSymbol = true"
+                >
+                    {{decorateMinorSymbol('m')}}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -426,6 +460,44 @@ watch(
   .chromatic-btn {
     width: 2em;
   }
+}
+
+.decorator-big-wrapper {
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3em;
+}
+
+.cipher-text {
+    font-weight: bold;
+}
+
+.decorator-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: fit-content;
+    border: 2px solid var(--default-bg-color);
+    border-radius: 5px;
+    padding: 0.3em;
+    gap: 0.3em;
+}
+
+.decorator-btn {
+    padding: 0.3em;
+    font-weight: bold;
+    border: 2px solid var(--nav-bottom-color);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.decorator-item-selected {
+    background-color: var(--default-bg-color);
+    color: white;
 }
 
 </style>
