@@ -215,39 +215,43 @@ watch(
           </div>
           <div class="menu-item">
             <div class="decorator-big-wrapper">
-              <p class="cipher-text">Cifra</p>
-              <div class="decorator-buttons">
-                <button 
-                    class="decorator-btn" 
-                    :class="{'decorator-item-selected': !isChord}"
-                    @click="isChord = false; applyTranspose()"
-                >
-                    {{ undecorateChord(currentRealTone) }}
-                </button>
-                <button 
-                    class="decorator-btn" 
-                    :class="{'decorator-item-selected': isChord}"
-                    @click="isChord = true; applyTranspose()"
-                >
-                    {{ decorateChord(currentRealTone) }}
-                </button>
+              <div class="decorator-wrapper">
+                <p class="cipher-text">Cifra</p>
+                <div class="decorator-buttons">
+                  <button 
+                      class="decorator-btn" 
+                      :class="{'decorator-item-selected': !isChord}"
+                      @click="isChord = false; applyTranspose()"
+                  >
+                      {{ undecorateChord(currentRealTone) }}
+                  </button>
+                  <button 
+                      class="decorator-btn" 
+                      :class="{'decorator-item-selected': isChord}"
+                      @click="isChord = true; applyTranspose()"
+                  >
+                      {{ decorateChord(currentRealTone) }}
+                  </button>
+                </div>
               </div>
-              <p class="cipher-text">Marca</p>
-              <div class="decorator-buttons">
-                <button 
-                    class="decorator-btn" 
-                    :class="{'decorator-item-selected': !isMinorSymbol}"
-                    @click="isMinorSymbol = false; applyTranspose()"
-                >
-                    {{ undecorateMinorSymbol('-') }}
-                </button>
-                <button 
-                    class="decorator-btn" 
-                    :class="{'decorator-item-selected': isMinorSymbol}"
-                    @click="isMinorSymbol = true; applyTranspose()"
-                >
-                    {{ decorateMinorSymbol('m') }}
-                </button>
+              <div class="decorator-wrapper">
+                <p class="cipher-text">Marca</p>
+                <div class="decorator-buttons">
+                  <button 
+                      class="decorator-btn" 
+                      :class="{'decorator-item-selected': !isMinorSymbol}"
+                      @click="isMinorSymbol = false; applyTranspose()"
+                  >
+                      {{ undecorateMinorSymbol('-') }}
+                  </button>
+                  <button 
+                      class="decorator-btn" 
+                      :class="{'decorator-item-selected': isMinorSymbol}"
+                      @click="isMinorSymbol = true; applyTranspose()"
+                  >
+                      {{ decorateMinorSymbol('m') }}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -396,6 +400,45 @@ watch(
   width: 2.1em;
 }
 
+.decorator-big-wrapper {
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;
+}
+
+.cipher-text {
+  font-weight: bold;
+  text-align: center;
+}
+
+.decorator-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: fit-content;
+  border: 2px solid var(--default-bg-color);
+  border-radius: 5px;
+  padding: 0.3em;
+  gap: 0.3em;
+}
+
+.decorator-btn {
+  padding: 0.3em;
+  font-weight: bold;
+  border: 2px solid var(--nav-bottom-color);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.decorator-item-selected {
+  background-color: var(--default-bg-color);
+  color: white;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .lyrics-meta-item {
@@ -460,44 +503,19 @@ watch(
   .chromatic-btn {
     width: 2em;
   }
-}
 
-.decorator-big-wrapper {
-    font-size: 0.9rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.3em;
-}
+  .decorator-big-wrapper {
+    flex-direction: row;
+    padding-top: 0.3em;
+  }
 
-.cipher-text {
-    font-weight: bold;
-}
-
-.decorator-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    width: fit-content;
-    border: 2px solid var(--default-bg-color);
-    border-radius: 5px;
+  .decorator-wrapper {
     padding: 0.3em;
-    gap: 0.3em;
-}
+  }
 
-.decorator-btn {
-    padding: 0.3em;
-    font-weight: bold;
-    border: 2px solid var(--nav-bottom-color);
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.decorator-item-selected {
-    background-color: var(--default-bg-color);
-    color: white;
+  .decorator-btn {
+    padding: 0.5em;
+  }
 }
 
 </style>
