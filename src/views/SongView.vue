@@ -2,12 +2,14 @@
 
 import { ref, computed, defineAsyncComponent, watch, watchEffect, onUnmounted } from 'vue';
 
-import Tone from '@/components/Tone.vue';
 import NotFound from '@/components/NotFound.vue';
+import Decorator from '@/components/Decorator.vue';
 
 import songs_map from '@/assets/songs_map.json';
 
 import { DEFAULT_TITLE } from "@/constants.js";
+
+import { useToneTranslator } from '@/composables/useToneTranslator';
 
 /**
  * This view takes into account the id of a song.
@@ -44,28 +46,16 @@ const lyricsReady = ref(false);
 function onLyricsMounted() {
   lyricsReady.value = true;
 }
-const localRealTone = ref(null);
-const localCapoTone = ref(null);
-const localCapo = ref(null);
-
-const onRealToneChange = (tone) => localRealTone.value = tone;
-const onCapoToneChange = (tone) => localCapoTone.value = tone;
-const onCapoChange = (capo) => localCapo.value = capo;
-
-const displayRealTone = computed(() => localRealTone.value ?? song.value.tone);
-const displayCapoTone = computed(() => localCapoTone.value ?? song.value.tone);
-const displayCapo = computed(() => localCapo.value ?? song.value?.capo);
 
 // Controls whether the mobile floating menu panel is expanded
 const menuOpen = ref(false);
 const toggleMenu = () => menuOpen.value = !menuOpen.value;
 
+const decorator = ref(null);
+
 watch(() => props.id, () => {
   lyricsReady.value = false;
-  localRealTone.value = null;
-  localCapoTone.value = null;
-  localCapo.value = null
-  menuOpen.value = false
+  menuOpen.value = false;
 });
 
 /**
@@ -80,6 +70,77 @@ onUnmounted(() => {
   document.title = DEFAULT_TITLE;
 });
 
+const { getScale, getDefaultUseFlat, indexOfTone, transposeChord, transposeSpan } = useToneTranslator();
+
+const useFlat = ref(false);
+const semitones = ref(song.value.capo ?? 0);
+const capoInput = ref(song.value.capo ?? 0);
+let originals = new WeakMap();
+
+const buttonLabel = computed(() => useFlat.value ? '♭' : '♯');
+const scale = computed(() => getScale(song.value.tone, useFlat.value));
+
+const currentRealTone = computed(() => transposeChord(song.value.tone, semitones.value, useFlat.value));
+const currentCapoTone = computed(() => transposeChord(song.value.tone, semitones.value - capoInput.value, useFlat.value));
+
+function captureOriginals() {
+  if (!lyricsContainer.value) return;
+
+  lyricsContainer.value.querySelectorAll('.chord').forEach(span => {
+    originals.set(span, span.textContent);
+  });
+}
+
+function applyTranspose() {
+  if (!lyricsContainer.value) return;
+
+  lyricsContainer.value.querySelectorAll('.chord').forEach(span => {
+    const original = originals.get(span) ?? span.textContent;
+    span.textContent = transposeSpan(original, semitones.value - capoInput.value, useFlat.value);
+  });
+}
+
+function capoChange() {
+  useFlat.value = getDefaultUseFlat(currentCapoTone.value);
+  applyTranspose();
+}
+
+function changeTone(newSemitones) {
+  semitones.value = newSemitones;
+  useFlat.value = getDefaultUseFlat(currentCapoTone.value);
+  applyTranspose();
+}
+
+function selectTone(tone) {
+  const targetIdx = indexOfTone(tone);
+  const baseIdx = indexOfTone(song.value.tone);
+  if (targetIdx === undefined || baseIdx === undefined) return;
+
+  changeTone(targetIdx - baseIdx);
+}
+
+function step(delta) {
+  changeTone(semitones.value + delta);
+}
+
+function toggleChromatic() {
+  useFlat.value = !useFlat.value;
+  applyTranspose();
+}
+
+watch(
+  () => [props.id, lyricsReady.value],
+  ([, ready]) => {
+    if (!ready) return; // wait until the real DOM is actually there
+
+    originals = new WeakMap();
+    useFlat.value = getDefaultUseFlat(currentCapoTone.value);
+
+    captureOriginals();
+    applyTranspose();
+  },
+);
+
 </script>
 
 <template>
@@ -89,14 +150,14 @@ onUnmounted(() => {
       <div class="lyrics-meta">
         <div class="lyrics-meta-item">
           <strong class="lyrics-meta-title">Tom</strong>
-          <span class="chord-style">{{ displayRealTone }}</span>
+          <span class="chord-style">{{ currentRealTone }}</span>
         </div>
-        <div class="lyrics-meta-item" v-if="displayCapo > 0">
-          <span class="chord-style">({{ displayCapoTone }})</span>
+        <div class="lyrics-meta-item" v-if="capoInput > 0">
+          <span class="chord-style">({{ currentCapoTone }})</span>
         </div>
-        <div class="lyrics-meta-item" v-if="displayCapo > 0">
+        <div class="lyrics-meta-item" v-if="capoInput > 0">
           <strong class="lyrics-meta-title">Capo</strong>
-          <span>{{ displayCapo }}</span>
+          <span>{{ capoInput }}</span>
         </div>
           <div class="lyrics-meta-item">
             <strong class="lyrics-meta-title">Momento</strong>
@@ -115,14 +176,39 @@ onUnmounted(() => {
         <div class="menu" :class="{ 'menu-open': menuOpen }">
           <div class="menu-item">
             <h3 class="section-header-small">Tonalidade</h3>
-            <Tone
-              :song="song"
-              :lyrics="lyricsContainer"
-              :lyrics-ready="lyricsReady"
-              @real-tone-change="onRealToneChange"
-              @capo-tone-change="onCapoToneChange"
-              @capo-change="onCapoChange"
-            />
+            <div class="tone-big-wrapper">
+              <ul class="tones">
+                <li
+                  class="tone-item"
+                  :class="{ 'tone-item-selected': currentRealTone === tone }"
+                  v-for="tone in scale"
+                  :key="tone"
+                  @click="selectTone(tone)"
+                >
+                  <span class="tone-item-text">{{ tone }}</span>
+                </li>
+              </ul>
+
+              <div class="chromatic-buttons">
+                <button class="chromatic-btn" @click="step(-1)">-</button>
+                <button class="chromatic-btn" @click="toggleChromatic">{{ buttonLabel }}</button>
+                <button class="chromatic-btn" @click="step(1)">+</button>
+              </div>
+
+              <div class="capo-wrapper">
+                <p class="capo">Capo</p>
+                <input 
+                  class="capo-number"
+                  type="numeric"
+                  name="capo-number"
+                  v-model="capoInput"
+                  @change="capoChange"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="menu-item">
+            
           </div>
         </div>
 
@@ -180,6 +266,93 @@ onUnmounted(() => {
 
 .menu-button {
   display: none;
+}
+
+.tone-big-wrapper {
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  gap: 0.9em;
+}
+
+.tones {
+  display: flex;
+  list-style-type: none;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.tone-item {
+  color: var(--chord-text-color);
+  width: 2.6em;
+  height: 2.6em;
+  cursor: pointer;
+  border: 2px solid var(--nav-bottom-color);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tone-item-text {
+  font-weight: bold;
+  color: inherit;
+  text-align: center;
+}
+
+.tone-item:hover {
+  background-color: var(--tone-btn-hover-bg-color);
+}
+
+.tone-item-selected {
+  background-color: var(--default-bg-color);
+  color: white;
+}
+
+.chromatic-buttons {
+  display: flex;
+  gap: 0.3em;
+  justify-content: center;
+}
+
+.chromatic-btn {
+  width: 25%;
+  border: 2px solid var(--nav-bottom-color);
+  background-color: var(--default-bg-color);
+  border-radius: 5px;
+  font-size: 1.4em;
+  color: var(--nav-text-color);
+  cursor: pointer;
+}
+
+.chromatic-btn:hover {
+  background-color: var(--tone-btn-hover-bg-color);
+}
+
+.capo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--default-bg-color);
+  width: fit-content;
+  border-radius: 5px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.capo {
+  padding-left: 0.5em;
+  text-align: center;
+}
+
+.capo-number {
+  text-align: center;
+  margin: 0.4em;
+  width: 2.1em;
 }
 
 /* Mobile responsiveness */
@@ -241,6 +414,10 @@ onUnmounted(() => {
   .menu-item {
     border-bottom: none;
     padding-bottom: 0;
+  }
+
+  .chromatic-btn {
+    width: 2em;
   }
 }
 

@@ -1,6 +1,6 @@
 <script setup>
 
-import { ref, computed, watch, nextTick, onMounted  } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 import { useToneTranslator } from '@/composables/useToneTranslator';
 
@@ -8,6 +8,7 @@ const props = defineProps({
     song: Object,
     lyrics: Object,
     lyricsReady: Boolean,
+    decorator: Object,
 });
 
 const emit = defineEmits(['real-tone-change', 'capo-tone-change', 'capo-change']);
@@ -38,7 +39,7 @@ function applyTranspose() {
 
   props.lyrics.querySelectorAll('.chord').forEach(span => {
     const original = originals.get(span) ?? span.textContent;
-    span.textContent = transposeSpan(original, semitones.value - capoInput.value, useFlat.value);
+    span.textContent = transposeSpan(original, semitones.value - capoInput.value, useFlat.value, props.decorator.decorate);
   });
 }
 
@@ -96,20 +97,20 @@ watch(
 </script>
 
 <template>
-  <div class="big-wrapper">
+  <div class="tone-big-wrapper">
     <ul class="tones">
       <li
-        class="item"
-        :class="{ 'item-selected': currentRealTone === tone }"
+        class="tone-item"
+        :class="{ 'tone-item-selected': currentRealTone === tone }"
         v-for="tone in scale"
         :key="tone"
         @click="selectTone(tone)"
       >
-        <span class="item-text">{{ tone }}</span>
+        <span class="tone-item-text">{{ tone }}</span>
       </li>
     </ul>
 
-    <div class="buttons">
+    <div class="chromatic-buttons">
       <button class="chromatic-btn" @click="step(-1)">-</button>
       <button class="chromatic-btn" @click="toggleChromatic">{{ buttonLabel }}</button>
       <button class="chromatic-btn" @click="step(1)">+</button>
@@ -130,7 +131,7 @@ watch(
 
 <style scoped>
 
-.big-wrapper {
+.tone-big-wrapper {
   font-size: 0.9rem;
   display: flex;
   flex-direction: column;
@@ -148,7 +149,7 @@ watch(
   align-items: center;
 }
 
-.item {
+.tone-item {
   color: var(--chord-text-color);
   width: 2.6em;
   height: 2.6em;
@@ -160,22 +161,22 @@ watch(
   align-items: center;
 }
 
-.item-text {
+.tone-item-text {
   font-weight: bold;
   color: inherit;
   text-align: center;
 }
 
-.item:hover {
+.tone-item:hover {
   background-color: var(--tone-btn-hover-bg-color);
 }
 
-.item-selected {
+.tone-item-selected {
   background-color: var(--default-bg-color);
   color: white;
 }
 
-.buttons {
+.chromatic-buttons {
   display: flex;
   gap: 0.3em;
   justify-content: center;

@@ -75,12 +75,15 @@ export function useToneTranslator() {
         return chromaticScale[((idx + semitones) % chromaticScale.length + chromaticScale.length) % chromaticScale.length] + chord.substring(chordStripped.length);
     }
 
-    function transposeSpan(span, semitones, useFlat=false) {
+    function transposeSpan(span, semitones, useFlat=false, decoratorFn=null) {
         if (!span) return;
 
         return span.replace(CHORD_ROOT_RE, (match) => {
             const newTone = transposeChord(match, semitones, useFlat);
-            return newTone !== null ? newTone : match;
+            if (!newTone) return match;
+            if (!decoratorFn) return newTone;
+            
+            return decoratorFn(newTone);
         });
     }
 
