@@ -47,10 +47,15 @@ function onLyricsMounted() {
 const displayRealTone = ref(null);
 const displayCapoTone = ref(null);
 
+// Controls whether the mobile floating menu panel is expanded
+const menuOpen = ref(false);
+const toggleMenu = () => menuOpen.value = !menuOpen.value;
+
 watch(() => props.id, () => {
   lyricsReady.value = false;
   displayRealTone.value = null;
   displayCapoTone.value = null;
+  menuOpen.value = false
 });
 
 
@@ -107,7 +112,8 @@ onUnmounted(() => {
             @vue:mounted="onLyricsMounted"
           />
         </div>
-        <div class="menu">
+
+        <div class="menu" :class="{ 'menu-open': menuOpen }">
           <div class="menu-item">
             <h3 class="section-header-small">Tonalidade</h3>
             <Tone
@@ -120,6 +126,14 @@ onUnmounted(() => {
             />
           </div>
         </div>
+
+        <button
+          class="menu-button"
+          type="button"
+          @click="toggleMenu"
+        >
+          <img class="menu-icon" src="@/assets/img/guitar.png" alt="guitar">
+        </button>
       </div>
       <div v-else>
         <NotFound :title="song.title" />
@@ -165,6 +179,10 @@ onUnmounted(() => {
   padding-bottom: 1em;
 }
 
+.menu-button {
+  display: none;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .lyrics-meta-item {
@@ -177,6 +195,53 @@ onUnmounted(() => {
 
   .lyrics-meta-title {
     margin-right: 0;
+  }
+
+  .menu-button {
+    display: block;
+    position: fixed;
+    bottom: 1.4em;
+    right: 1.4em;
+
+    width: 4.8em;
+    height: 4.8em;
+    border-radius: 50%;
+    background-color: var(--default-bg-color);
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  .menu-icon {
+    display: inline-block;
+    width: 3.3em;
+    height: 3.3em;
+    background-size: cover;
+    vertical-align: middle;
+  }
+
+  .menu {
+    display: none;
+    position: fixed;
+    bottom: 6em;
+    right: 1.4em;
+
+    width: min(80vw, 320px);
+    max-height: 70vh;
+    overflow: auto;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    padding: 1em;
+    z-index: 1001;
+  }
+
+  .menu-open {
+    display: block;
+  }
+
+  .menu-item {
+    border-bottom: none;
+    padding-bottom: 0;
   }
 }
 

@@ -215,4 +215,11 @@ watch(
   width: 2.1em;
 }
 
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .chromatic-btn {
+    width: 2em;
+  }
+}
+
 </style>

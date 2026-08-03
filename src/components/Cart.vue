@@ -131,13 +131,14 @@ function confirmClearAll() {
 
 .cart-button {
   position: fixed;
-  left: 20px;
-  bottom: 20px;
+  left: 1.4em;
+  bottom: 1.4em;
 
   width: 4.8em;
   height: 4.8em;
   border-radius: 50%;
   border-color: var(--default-bg-color);
+  cursor: pointer;
   z-index: 1000;
 }
 
@@ -147,13 +148,12 @@ function confirmClearAll() {
   height: 4.3em;
   background-size: cover;
   vertical-align: middle;
-  cursor: pointer;
 }
 
 .cart-panel {
   position: fixed;
-  left: 20px;
-  bottom: 95px;
+  left: 1.4em;
+  bottom: 6em;
 
   width: min(320px, calc(100vw - 40px));
   max-height: 45vh;
@@ -183,12 +183,12 @@ function confirmClearAll() {
 }
 
 .pdf-merge-icon {
-  width: 110px;
+  width: 7em;
   margin: 0.6em;
 }
 
 .clean-icon {
-  width: 60px;
+  width: 4em;
   margin: 0.6em;
 }
 
