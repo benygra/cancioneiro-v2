@@ -51,8 +51,11 @@ function capoChange() {
 
 function changeTone(newSemitones) {
   semitones.value = newSemitones;
+  useFlat.value = getDefaultUseFlat(currentCapoTone.value);
   emit('real-tone-change', currentRealTone.value);
-  capoChange();
+  emit('capo-tone-change', currentCapoTone.value);
+  emit('capo-change', capoInput.value);
+  applyTranspose();
 }
 
 function selectTone(tone) {
