@@ -163,6 +163,10 @@ watch(
 
 watch(hideChords, (newValue) => handlerHideChords(newValue));
 
+function printSong() {
+  window.print();
+}
+
 </script>
 
 <template>
@@ -288,6 +292,14 @@ watch(hideChords, (newValue) => handlerHideChords(newValue));
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <h3 class="section-header-small">Texto</h3>
+            <div class="chromatic-buttons">
+            <button class="text-btn" @click="printSong">
+              <img class="decorator-btn-icon" src="@/assets/img/pdf-print.png" alt="IMPRIMIR">Imprimir
+            </button>
             </div>
           </div>
         </div>
@@ -482,6 +494,20 @@ watch(hideChords, (newValue) => handlerHideChords(newValue));
   vertical-align: middle;
 }
 
+.text-btn {
+  border: 2px solid var(--nav-bottom-color);
+  background-color: var(--default-bg-color);
+  border-radius: 5px;
+  font-size: 1em;
+  color: var(--nav-text-color);
+  padding: 0.3em;
+  cursor: pointer;
+}
+
+.text-btn:hover {
+  background-color: var(--tone-btn-hover-bg-color);
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .lyrics-meta-item {
@@ -558,6 +584,28 @@ watch(hideChords, (newValue) => handlerHideChords(newValue));
 
   .decorator-btn {
     padding: 0.5em;
+  }
+}
+
+@media print {
+  .menu,
+  .menu-button,
+  .print-button {
+    display: none !important;
+  }
+
+  .lyrics-meta {
+    position: static;
+  }
+
+  .lyrics {
+    width: 100%;
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+
+  .wrapper {
+    display: block;
   }
 }
 
