@@ -67,7 +67,7 @@ onUnmounted(() => {
   document.title = DEFAULT_TITLE;
 });
 
-const { isChord, isMinorSymbol, decorateChord, decorateMinorSymbol, decorate, undecorateChord, undecorateMinorSymbol, undecorate,
+const { hideChords, isChord, isMinorSymbol, decorateChord, decorateMinorSymbol, decorate, undecorateChord, undecorateMinorSymbol, undecorate,
   getScale, getDefaultUseFlat, indexOfTone, transposeChord, transposeSpan
  } = useDecorator();
 
@@ -85,16 +85,6 @@ const currentCapoTone = computed(() => transposeChord(song.value.tone, semitones
 // for display
 const displayCapo = ref(capoInput.value);
 const displayCapoTone = ref(currentCapoTone.value);
-
-const hideChords = ref(false);
-
-watch(hideChords, (newValue) => {
-  if (!lyricsContainer.value) return;
-
-  lyricsContainer.value.querySelectorAll('.chord').forEach(span => {
-    span.style.display = newValue ? 'none' : '';
-  });
-});
 
 function captureOriginals() {
   if (!lyricsContainer.value) return;
@@ -149,6 +139,14 @@ function clickDecoration() {
   applyTranspose();
 }
 
+function handlerHideChords(newValue) {
+  if (!lyricsContainer.value) return;
+
+  lyricsContainer.value.querySelectorAll('.chord').forEach(span => {
+    span.style.display = newValue ? 'none' : '';
+  });
+}
+
 watch(
   () => [props.id, lyricsReady.value],
   ([, ready]) => {
@@ -158,9 +156,12 @@ watch(
     useFlat.value = getDefaultUseFlat(currentCapoTone.value);
 
     captureOriginals();
+    handlerHideChords(hideChords.value);
     applyTranspose();
   },
 );
+
+watch(hideChords, (newValue) => handlerHideChords(newValue));
 
 </script>
 
@@ -169,14 +170,14 @@ watch(
     <section class="content-section">
       <h2 class="section-header">{{ song.title }}</h2>
       <div class="lyrics-meta">
-        <div class="lyrics-meta-item">
+        <div class="lyrics-meta-item" v-if="!hideChords">
           <strong class="lyrics-meta-title">Tom</strong>
           <span class="chord-style">{{ currentRealTone }}</span>
         </div>
-        <div class="lyrics-meta-item" v-if="displayCapo > 0">
+        <div class="lyrics-meta-item" v-if="displayCapo > 0 && !hideChords">
           <span class="chord-style">({{ displayCapoTone }})</span>
         </div>
-        <div class="lyrics-meta-item" v-if="displayCapo > 0">
+        <div class="lyrics-meta-item" v-if="displayCapo > 0 && !hideChords">
           <strong class="lyrics-meta-title">Capo</strong>
           <span>{{ displayCapo }}</span>
         </div>

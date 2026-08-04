@@ -19,7 +19,7 @@ function handleAdd() {
 
 <template>
   <tr>
-    <td><a target="_blank" :href="`/songs/${id}`">{{ song.title }}</a></td>
+    <td><router-link :to="`/songs/${props.id}`">{{ song.title }}</router-link></td>
     <td>{{ song.moment }}</td>
     <td>{{ song.tone }}</td>
     <td><button class="btn" @click="handleAdd">+</button></td>

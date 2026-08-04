@@ -48,6 +48,7 @@ function undecorate(chord) {
 
 const isChord = ref(false);
 const isMinorSymbol = ref(false);
+const hideChords = ref(false);
 
 const { getRawScale, getRawDefaultUseFlat, indexOfRawTone, transposeRawChord, transposeRawSpan } = useToneTranslator();
 
@@ -79,7 +80,7 @@ export function useDecorator() {
     const transposeChord = (chord, semitones, useFlat=false) => decorate(transposeRawChord(undecorate(chord), semitones, useFlat));
     const transposeSpan = (span, semitones, useFlat=false) => decorate(transposeRawSpan(undecorate(span), semitones, useFlat));
 
-    return { isChord, isMinorSymbol, decorateChord, decorateMinorSymbol, decorate, undecorateChord, undecorateMinorSymbol, undecorate,
+    return { hideChords, isChord, isMinorSymbol, decorateChord, decorateMinorSymbol, decorate, undecorateChord, undecorateMinorSymbol, undecorate,
         getScale, getDefaultUseFlat, indexOfTone, transposeChord, transposeSpan
      };
 }
