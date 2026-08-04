@@ -8,8 +8,8 @@ Cantando vêm com alegria, Senhor,<span class="chord">
 ||: Os que caminham pela vida, Senhor,<span class="chord">
           E                                  A</span>
 Semeando a Tua paz e amor. :||<span class="chord">
-          A                                 D</span><span class="chord chord-space bold">
-Semeando a Tua paz e amor. </span></strong>
+          A                                 D</span>
+Semeando a Tua paz e amor.</strong>
 <span class="chord">
 D                                   A</span>
 Vêm trazendo a esperança<span class="chord">

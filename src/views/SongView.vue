@@ -86,6 +86,16 @@ const currentCapoTone = computed(() => transposeChord(song.value.tone, semitones
 const displayCapo = ref(capoInput.value);
 const displayCapoTone = ref(currentCapoTone.value);
 
+const hideChords = ref(false);
+
+watch(hideChords, (newValue) => {
+  if (!lyricsContainer.value) return;
+
+  lyricsContainer.value.querySelectorAll('.chord').forEach(span => {
+    span.style.display = newValue ? 'none' : '';
+  });
+});
+
 function captureOriginals() {
   if (!lyricsContainer.value) return;
 
@@ -220,6 +230,25 @@ watch(
           </div>
           <div class="menu-item">
             <div class="decorator-big-wrapper">
+              <div class="decorator-wrapper">
+                <p class="cipher-text">Acordes</p>
+                <div class="decorator-buttons">
+                  <button 
+                      class="decorator-btn" 
+                      :class="{'decorator-item-selected': !hideChords}"
+                      @click="hideChords = false"
+                  >
+                   <img class="decorator-btn-icon" src="@/assets/img/eyes-open.png" alt="MOSTRAR">
+                  </button>
+                  <button 
+                      class="decorator-btn" 
+                      :class="{'decorator-item-selected': hideChords}"
+                      @click="hideChords = true"
+                  >
+                      <img class="decorator-btn-icon" src="@/assets/img/eyes-closed.png" alt="OCULTAR">
+                  </button>
+                </div>
+              </div>
               <div class="decorator-wrapper">
                 <p class="cipher-text">Cifra</p>
                 <div class="decorator-buttons">
@@ -442,6 +471,14 @@ watch(
 .decorator-item-selected {
   background-color: var(--default-bg-color);
   color: white;
+}
+
+.decorator-btn-icon {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  background-size: cover;
+  vertical-align: middle;
 }
 
 /* Mobile responsiveness */
