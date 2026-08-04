@@ -53,8 +53,14 @@ const { getRawScale, getRawDefaultUseFlat, indexOfRawTone, transposeRawChord, tr
 
 export function useDecorator() {
 
+    function undecorate(chord) {
+        if (isMinorSymbol.value) chord = undecorateMinorSymbol(chord);
+        if (isChord.value) chord = undecorateChord(chord);
+        return chord;
+    }
+
     const decorateChord = (chord) => undecorateChord(chord).replace(CHORD_ROOT_RE, (match) => CHORD_TRANSLATE[match] ?? match);
-    const decorateMinorSymbol = (chord) => undecorateChord(chord).replace(MINOR_SYMBOL_ROOT_RE, (match) => MINOR_SYMBOL_TRANSLATE[match] ?? match);
+    const decorateMinorSymbol = (chord) => undecorateMinorSymbol(chord).replace(MINOR_SYMBOL_ROOT_RE, (match) => MINOR_SYMBOL_TRANSLATE[match] ?? match);
 
     function decorate(chord) {
         chord = undecorate(chord);
@@ -66,12 +72,6 @@ export function useDecorator() {
 
     const undecorateChord = (chord) => chord.replace(CHORD_ROOT_REVERSE_RE, (match) => CHORD_TRANSLATE_REVERSE.get(match) ?? match);
     const undecorateMinorSymbol = (chord) => chord.replace(MINOR_SYMBOL_ROOT_REVERSE_RE, (match) => MINOR_SYMBOL_TRANSLATE_REVERSE.get(match) ?? match);
-
-    function undecorate(chord) {
-        if (isMinorSymbol.value) chord = undecorateMinorSymbol(chord);
-        if (isChord.value) chord = undecorateChord(chord);
-        return chord;
-    }
 
     const getScale = (tone='', useFlat=false) => getRawScale(undecorate(tone), useFlat).map(decorate);
     const getDefaultUseFlat = (tone) => getRawDefaultUseFlat(undecorate(tone));

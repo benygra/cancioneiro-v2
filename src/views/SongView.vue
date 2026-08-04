@@ -134,6 +134,11 @@ function toggleChromatic() {
   applyTranspose();
 }
 
+function clickDecoration() {
+  displayCapoTone.value = currentCapoTone.value;
+  applyTranspose();
+}
+
 watch(
   () => [props.id, lyricsReady.value],
   ([, ready]) => {
@@ -221,14 +226,14 @@ watch(
                   <button 
                       class="decorator-btn" 
                       :class="{'decorator-item-selected': !isChord}"
-                      @click="isChord = false; applyTranspose()"
+                      @click="isChord = false; clickDecoration()"
                   >
                       {{ undecorateChord(currentRealTone) }}
                   </button>
                   <button 
                       class="decorator-btn" 
                       :class="{'decorator-item-selected': isChord}"
-                      @click="isChord = true; applyTranspose()"
+                      @click="isChord = true; clickDecoration()"
                   >
                       {{ decorateChord(currentRealTone) }}
                   </button>
@@ -240,14 +245,14 @@ watch(
                   <button 
                       class="decorator-btn" 
                       :class="{'decorator-item-selected': !isMinorSymbol}"
-                      @click="isMinorSymbol = false; applyTranspose()"
+                      @click="isMinorSymbol = false; clickDecoration()"
                   >
                       {{ undecorateMinorSymbol('-') }}
                   </button>
                   <button 
                       class="decorator-btn" 
                       :class="{'decorator-item-selected': isMinorSymbol}"
-                      @click="isMinorSymbol = true; applyTranspose()"
+                      @click="isMinorSymbol = true; clickDecoration()"
                   >
                       {{ decorateMinorSymbol('m') }}
                   </button>
